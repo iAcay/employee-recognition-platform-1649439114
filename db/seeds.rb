@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 1.upto(5) do |i|
-    Employee.create(email: "employee#{i}@test.com", password: 'password')
+  Employee.create(email: "employee#{i}@test.com", password: 'password')
+end
+
+1.upto(3) do |i|
+  Kudo.create(title: "From seed#{i}", content: "Something", giver: Employee.find_by(email: "employee#{i}@test.com"), receiver: Employee.find_by(email: "employee#{4 - i}"))
 end
 
