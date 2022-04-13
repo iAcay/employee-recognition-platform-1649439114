@@ -1,11 +1,12 @@
-# Employee Recognition Platfrom
+# Welcome to Employee Recognition Platfrom!
 
-### Setup
-```
-bin/setup
-```
+### How to use the platform?
 
-### How to start the app
-```
-rails server
-```
+You should visit https://appforemployees.herokuapp.com
+
+You can use sample login data:
+
+login: 'employee1@test.com'
+password: 'password'
+
+### Enjoy the Platform!
