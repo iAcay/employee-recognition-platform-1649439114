@@ -1,24 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @kudo.title %>
-</p>
+<div class="shadow p-3 mb-5 bg-body rounded">
+  <figure class="text-end">
+    <figcaption class="block-footer">
+      <strong>Giver:</strong>
+      <%= @kudo.giver.email %>
+    </figcaption>
 
-<p>
-  <strong>Content:</strong>
-  <%= @kudo.content %>
-</p>
+    <figcaption class="block-footer">
+      <strong>Receiver:</strong>
+      <%= @kudo.receiver.email %>
+    </figcaption>
+  </figure>
 
-<p>
-  <strong>Giver:</strong>
-  <%= @kudo.giver.email %>
-</p>
+  <h2 class="display-6">
+    <strong>Title:</strong>
+    <%= @kudo.title %>
+  </h2>
+  <p class="lead">
+    <em><%= @kudo.content %></em>
+  </p>
 
-<p>
-  <strong>Receiver:</strong>
-  <%= @kudo.receiver.email %>
-</p>
 
-<%= link_to 'Edit', edit_kudo_path(@kudo) %> |
-<%= link_to 'Back', kudos_path %>
+  <%= link_to 'Edit', edit_kudo_path(@kudo) %> |
+  <%= link_to 'Back', kudos_path %>
+</div>

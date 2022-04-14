@@ -31,6 +31,23 @@ RSpec.describe 'Modifying kudos', type: :system do
 
       expect(page).to have_content 'updated'
 
+      # VALIDATION
+      # create
+      visit '/kudos/new'
+      fill_in 'Title', with: 'Great Worker!'
+      fill_in 'Content', with: ''
+      click_button 'Create Kudo'
+
+      expect(page).to have_content 'be blank'
+
+      # edit
+      visit '/kudos'
+      click_link 'Edit'
+      fill_in 'Title', with: ''
+      click_button 'Update Kudo'
+
+      expect(page).to have_content 'be blank'
+
       # DESTROYING A KUDO
       visit '/kudos'
       click_link 'Destroy'

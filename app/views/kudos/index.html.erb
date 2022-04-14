@@ -1,32 +1,40 @@
-<h1>Kudos</h1>
+<div class="table-responsive">
+  <% if employee_signed_in? %>
+    <table class="table table-striped table-bordered table-hover table caption-top">
+      <caption class="text-center"><h1>Kudos &#128509;</h1></caption>
+      <thead class="table-dark">
+        <tr class="text-center">
+          <th>Title</th>
+          <th>Content</th>
+          <th>Giver</th>
+          <th>Receiver</th>
+          <th>Modification</th>
+        </tr>
+      </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Giver</th>
-      <th>Receiver</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @kudos.each do |kudo| %>
-      <tr>
-        <td><%= kudo.title %></td>
-        <td><%= kudo.content %></td>
-        <td><%= kudo.giver.email %></td>
-        <td><%= kudo.receiver.email %></td>
-        <% if kudo.giver == current_employee %>
-          <td><%= link_to 'Edit', edit_kudo_path(kudo) %></td>
-          <td><%= link_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tbody>
+        <% @kudos.each do |kudo| %>
+          <tr class="text-center">
+            <td><%= link_to kudo.title, kudo %></td>
+            <td><%= kudo.content %></td>
+            <td><%= kudo.giver.email %></td>
+            <td><%= kudo.receiver.email %></td>
+            <% if kudo.giver == current_employee %>
+              <td>
+                <%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-outline-primary' %>
+                <%= link_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %>
+              </td>
+            <% else %>
+              <td><%= link_to 'Unauthorized', kudos_path, class:'btn btn-outline-warning' %></td>
+            <% end %>
+          </tr>
         <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Kudo', new_kudo_path %>
+      </tbody>
+    </table>  
+  <% else %>
+    <h1 class="text-center">You have to be logged in to view the kudos list &#128576;</h1>
+    <div style="text-align:center;">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/zmte5lUh5Vc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  <% end %>
+</div>
