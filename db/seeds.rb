@@ -10,7 +10,7 @@
   Employee.create(email: "employee#{i}@test.com", password: 'password')
 end
 
-1.upto(3) do |i|
-  Kudo.create(title: "From seed#{i}", content: "Something", giver: Employee.find_by(email: "employee#{i}@test.com"), receiver: Employee.find_by(email: "employee#{4 - i}@test.com"))
+1.upto(4) do |i|
+  Kudo.create(title: "#{i}.From seed", content: "His work is awesome! He did what he should three times faster than others! Really great!", giver: Employee.find_by(email: "employee#{i}@test.com"), receiver: Employee.find_by(email: "employee#{5 - i}@test.com"))
 end
 
