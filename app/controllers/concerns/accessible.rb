@@ -13,7 +13,7 @@ module Accessible
   def check_employee
     return unless current_employee
 
-    flash[:notice] = 'You cannot be looged in as a employee.'
+    flash[:notice] = 'You cannot be looged in as an employee.'
     redirect_back(fallback_location: root_path)
   end
 end
