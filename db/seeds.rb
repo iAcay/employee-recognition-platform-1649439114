@@ -14,3 +14,4 @@ end
   Kudo.create(title: "#{i}.From seed", content: "His work is awesome! He did what he should three times faster than others! Really great!", giver: Employee.find_by(email: "employee#{i}@test.com"), receiver: Employee.find_by(email: "employee#{5 - i}@test.com"))
 end
 
+AdminUser.create(email: "admin@test.com", password: "password")
