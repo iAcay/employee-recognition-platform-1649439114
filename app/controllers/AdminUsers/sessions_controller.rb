@@ -28,7 +28,6 @@ module AdminUsers
     #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
     # end
     def after_sign_in_path_for(_resource)
-      # admin_dashboard_path
       dashboard_admin_users_pages_path
     end
   end
