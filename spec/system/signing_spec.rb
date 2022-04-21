@@ -8,13 +8,13 @@ RSpec.describe 'Signing', type: :system do
 
   # SIGNING IN
   context 'when sign in and sign out' do
-    it 'enables to sign in' do
-      create(:employee)
+    let(:employee) { create(:employee) }
 
+    it 'enables to sign in' do
       visit root_path
       click_link 'Sign in'
-      fill_in 'Email', with: 'employee@example.com'
-      fill_in 'Password', with: 'password321'
+      fill_in 'Email', with: employee.email
+      fill_in 'Password', with: employee.password
       click_button 'Log in'
 
       expect(page).to have_content 'Signed in'
