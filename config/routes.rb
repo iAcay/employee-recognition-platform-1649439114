@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :kudos
   
   namespace :admin_users, path: 'admin' do
+    resources :kudos, only: [:index, :destroy]
     resources :pages, only: [] do
       collection do
         get :dashboard
