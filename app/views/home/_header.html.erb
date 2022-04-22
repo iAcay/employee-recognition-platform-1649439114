@@ -8,15 +8,11 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <% if !employee_signed_in? %>
+        <% if admin_user_signed_in? %>
           <li class="nav-item">
-            <%= link_to 'Sign up', new_employee_registration_path, class:"nav-link" %>
+            <%= link_to 'Sign out', destroy_admin_user_session_path, method: :delete, class:"nav-link" %>
           </li>
-
-          <li class="nav-item">
-            <%= link_to 'Sign in', new_employee_session_path, class:"nav-link" %>
-          </li>
-        <% else %>
+        <% elsif employee_signed_in? %>
           <li class="nav-item">
             <%= link_to 'New Kudo', new_kudo_path, class:"nav-link" %>
           </li>
@@ -27,14 +23,16 @@
           
           <li class="nav-item">
             <%= link_to 'Sign out', destroy_employee_session_path, method: :delete, class:"nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Sign up', new_employee_registration_path, class:"nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to 'Sign in', new_employee_session_path, class:"nav-link" %>
           </li>  
         <% end %>
-         
-        <% if admin_user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to 'Sign out', destroy_admin_user_session_path, method: :delete, class:"nav-link" %>
-          </li>
-        <% end %> 
       </ul>
     </div>
   </div>
