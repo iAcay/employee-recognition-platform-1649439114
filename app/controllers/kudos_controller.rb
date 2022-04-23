@@ -2,6 +2,7 @@ class KudosController < ApplicationController
   before_action :set_kudo, only: %i[show edit update destroy]
   before_action :authenticate_employee!, except: %i[index show]
   before_action :correct_employee, only: %i[edit update destroy]
+  before_action :can_add_another_kudo?, only: %i[new create]
 
   # GET /kudos
   def index
@@ -26,6 +27,8 @@ class KudosController < ApplicationController
 
     if @kudo.save
       redirect_to kudos_path, notice: 'Kudo was successfully created.'
+
+      current_employee.update(number_of_available_kudos: current_employee.number_of_available_kudos - 1)
     else
       render :new
     end
@@ -44,6 +47,8 @@ class KudosController < ApplicationController
   def destroy
     @kudo.destroy
     redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
+
+    current_employee.update(number_of_available_kudos: current_employee.number_of_available_kudos + 1)
   end
 
   def correct_employee
@@ -62,5 +67,11 @@ class KudosController < ApplicationController
   # Only allow a list of trusted parameters through.
   def kudo_params
     params.require(:kudo).permit(:title, :content, :giver_id, :receiver_id)
+  end
+
+  def can_add_another_kudo?
+    return if current_employee.number_of_available_kudos.positive?
+
+    redirect_to kudos_path, notice: 'You cannot add more kudos.'
   end
 end
