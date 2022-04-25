@@ -16,12 +16,12 @@ RSpec.describe 'Signing admin', type: :system do
       fill_in 'Password', with: admin_user.password
       click_button 'Log in'
 
-      expect(page).to have_content 'Signed in'
+      expect(page).to have_content 'Signed in successfully.'
 
       # ADMIN SIGN OUT
       click_link 'Sign out'
 
-      expect(page).to have_content 'Signed out'
+      expect(page).to have_content 'Signed out successfully.'
     end
   end
 end

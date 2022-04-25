@@ -12,6 +12,7 @@ module AdminUsers
     def destroy
       @admin_users_kudo.destroy
       redirect_to admin_users_kudos_path, notice: 'Kudo was successfully destroyed.'
+      @admin_users_kudo.giver.update(number_of_available_kudos: @admin_users_kudo.giver.number_of_available_kudos + 1)
     end
 
     private
