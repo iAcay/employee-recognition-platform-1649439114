@@ -12,7 +12,6 @@ RSpec.describe 'Modifying kudos', type: :system do
 
   context 'when list all kudos' do
     it 'enables to list' do
-      
       visit '/admin/pages/dashboard'
       click_link 'Go to Kudos Admin Panel'
 
@@ -33,7 +32,6 @@ RSpec.describe 'Modifying kudos', type: :system do
 
   context 'when delete the kudo' do
     it 'enables to delete the kudo' do
-      
       visit 'admin/kudos'
       click_link 'Destroy'
 
