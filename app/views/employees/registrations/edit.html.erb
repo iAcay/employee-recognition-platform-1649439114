@@ -17,7 +17,7 @@
       <% end %>
 
       <div class="field form-group">
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder:"#{@minimum_password_length} characters minimum. Leave blank if you don't want to change it." %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder:"Password with #{@minimum_password_length} characters minimum. Leave blank if you don't want to change it." %>
       </div>
       </p>
 
@@ -50,4 +50,4 @@
 </div>
 </p>
 
-<%= link_to "Back", :back %>
+<%= link_to "Back", kudos_path %>
