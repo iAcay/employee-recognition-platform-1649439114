@@ -5,7 +5,7 @@ module AdminUsers
 
     # GET /kudos
     def index
-      @admin_users_kudos = Kudo.all
+      @admin_users_kudos = Kudo.includes(:receiver, :giver).all
     end
 
     # DELETE /kudos/1
