@@ -17,11 +17,11 @@ RSpec.describe 'Signing', type: :system do
       fill_in 'Password', with: employee.password
       click_button 'Log in'
 
-      expect(page).to have_content 'Signed in'
+      expect(page).to have_content 'Signed in successfully.'
 
       click_link 'Sign out'
 
-      expect(page).to have_content 'Signed out'
+      expect(page).to have_content 'Signed out successfully.'
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe 'Signing', type: :system do
       fill_in 'Password confirmation', with: 'password'
       click_button 'Sign up'
 
-      expect(page).to have_content 'Welcome!'
+      expect(page).to have_content 'Welcome! You have signed up successfully.'
       expect(change(Employee, :count).by(1)).to be_truthy
     end
   end

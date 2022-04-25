@@ -20,7 +20,7 @@ RSpec.describe 'Modifying kudos', type: :system do
       fill_in 'Content', with: 'Three times faster than others!'
       click_button 'Create Kudo'
 
-      expect(page).to have_content 'created'
+      expect(page).to have_content 'Kudo was successfully created.'
       expect(change(Kudo, :count).by(1)).to be_truthy
 
       # EDITING A KUDO
@@ -28,7 +28,7 @@ RSpec.describe 'Modifying kudos', type: :system do
       fill_in 'Title', with: 'Super Worker!'
       click_button 'Update Kudo'
 
-      expect(page).to have_content 'updated'
+      expect(page).to have_content 'Kudo was successfully updated.'
 
       # VALIDATION
       # create
@@ -37,7 +37,7 @@ RSpec.describe 'Modifying kudos', type: :system do
       fill_in 'Content', with: ''
       click_button 'Create Kudo'
 
-      expect(page).to have_content 'be blank'
+      expect(page).to have_content "Content can't be blank"
 
       # edit
       visit '/kudos'
@@ -45,13 +45,13 @@ RSpec.describe 'Modifying kudos', type: :system do
       fill_in 'Title', with: ''
       click_button 'Update Kudo'
 
-      expect(page).to have_content 'be blank'
+      expect(page).to have_content "Title can't be blank"
 
       # DESTROYING A KUDO
       visit '/kudos'
       click_link 'Destroy'
 
-      expect(page).to have_content 'destroyed'
+      expect(page).to have_content 'Kudo was successfully destroyed.'
       expect(change(Kudo, :count).by(1)).to be_truthy
     end
   end
