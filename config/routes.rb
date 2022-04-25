@@ -19,5 +19,6 @@ Rails.application.routes.draw do
         get :dashboard
       end
     end
+    resources :employees, only: [:index, :edit, :update, :destroy]
   end
 end

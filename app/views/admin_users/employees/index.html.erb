@@ -1,0 +1,25 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover table caption-top">
+    <caption class="text-center"><h1>Employees Admin Panel &#128110;</h1></caption>
+    <thead class="table-dark">
+      <tr class="text-center">
+        <th>Email</th>
+        <th>Available kudos</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @employees.each do |employee| %>
+        <tr class="text-center">
+          <td><%= employee.email %></td>
+          <td><%= employee.number_of_available_kudos %></td>
+          <td><%= link_to 'Edit', edit_admin_users_employee_path(employee), class: 'btn btn-outline-primary' %></td>
+          <td><%= link_to 'Destroy', admin_users_employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Back to Admin Dashboard', dashboard_admin_users_pages_path, class:'btn btn-outline-secondary' %> 
+</div>
