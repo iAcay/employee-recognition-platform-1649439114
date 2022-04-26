@@ -12,7 +12,8 @@ module AdminUsers
 
     def update
       if employee_params[:password].blank?
-        @employee.update_without_password(employee_params.except(:password))
+        return render :edit unless @employee.update_without_password(employee_params.except(:password))
+
         redirect_to admin_users_employees_path, notice: 'Employee was successfully updated.'
       elsif @employee.update(employee_params)
         redirect_to admin_users_employees_path, notice: 'Employee was successfully updated.'
