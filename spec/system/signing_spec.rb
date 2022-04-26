@@ -36,7 +36,7 @@ RSpec.describe 'Signing', type: :system do
       click_button 'Sign up'
 
       expect(page).to have_content 'Welcome! You have signed up successfully.'
-      expect(change(Employee, :count).by(1)).to be_truthy
+      expect(Employee.count).to eq 1
     end
   end
 end
