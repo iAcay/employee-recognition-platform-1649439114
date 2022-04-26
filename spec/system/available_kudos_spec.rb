@@ -17,7 +17,7 @@ RSpec.describe 'Available number of kudos', type: :system do
       create_new_kudo
 
       expect(page).to have_content 'Available: 9'
-      expect(change(Kudo, :count).by(1)).to be_truthy
+      expect(Kudo.count).to eq 1
 
       # AFTER CREATING TEN KUDOS
       9.times do

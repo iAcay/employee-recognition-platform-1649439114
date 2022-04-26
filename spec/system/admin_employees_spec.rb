@@ -40,10 +40,11 @@ RSpec.describe 'Modifying employees', type: :system do
 
       click_button 'Update'
 
+      employee.reload
+
       expect(page).to have_content 'Employee was successfully updated.'
-      expect(change(employee.email, :email)).to be_truthy
-      expect(change(employee.password, :password)).to be_truthy
-      expect(change(employee.number_of_available_kudos, :number_of_available_kudos)).to be_truthy
+      expect(employee.email).to eq 'changed@mail.com'
+      expect(employee.number_of_available_kudos).to eq 7
     end
 
     it 'enables to update without changing password' do
@@ -55,19 +56,36 @@ RSpec.describe 'Modifying employees', type: :system do
 
       click_button 'Update'
 
+      employee.reload
+
       expect(page).to have_content 'Employee was successfully updated.'
-      expect(change(employee.email, :email)).to be_truthy
-      expect(change(employee.number_of_available_kudos, :number_of_available_kudos)).to be_truthy
+      expect(employee.email).to eq 'changed@mail.com'
+      expect(employee.number_of_available_kudos).to eq 7
+    end
+
+    it 'checks validation' do
+      visit '/admin/employees'
+      click_link 'Edit'
+
+      employee2 = create(:employee)
+
+      fill_in 'Email', with: employee2.email
+      fill_in 'Password', with: '123'
+
+      click_button 'Update'
+
+      expect(page).to have_content 'Email has already been taken'
+      expect(page).to have_content 'Password is too short (minimum is 6 characters)'
     end
   end
 
-  context 'when delete employee' do
+  context 'when deleting employee' do
     it 'enables to delete employee' do
       visit 'admin/employees'
       click_link 'Destroy'
 
       expect(page).to have_content 'Employee was successfully destroyed.'
-      expect(change(Employee, :count).by(1)).to be_truthy
+      expect(Employee.count).to eq 0
     end
   end
 end

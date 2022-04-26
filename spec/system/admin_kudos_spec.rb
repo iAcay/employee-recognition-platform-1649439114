@@ -36,7 +36,7 @@ RSpec.describe 'Modifying kudos', type: :system do
       click_link 'Destroy'
 
       expect(page).to have_content 'Kudo was successfully destroyed.'
-      expect(change(Kudo, :count).by(1)).to be_truthy
+      expect(Kudo.count).to eq 0
     end
   end
 end
