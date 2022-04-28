@@ -14,11 +14,12 @@ Rails.application.routes.draw do
   
   namespace :admin_users, path: 'admin' do
     resources :kudos, only: [:index, :destroy]
+    resources :employees, only: [:index, :edit, :update, :destroy]
+    resources :company_values, except: [:show]
     resources :pages, only: [] do
       collection do
         get :dashboard
       end
     end
-    resources :employees, only: [:index, :edit, :update, :destroy]
   end
 end

@@ -1,0 +1,19 @@
+<div class="card-body">
+    <%= form_with(model: [:admin_users, @company_value]) do |form| %>
+      <div class="form-group">
+        <% company_value.errors.each do |error| %>
+          <li><strong><%= error.full_message %></strong></li>
+        <% end %>
+      </div>
+      </p>
+    
+      <div class="field form-group">
+        <%= form.text_field :title, autofocus: true, autocomplete: "title", class:"form-control", placeholder:"Title" %>
+      </div>
+      </p>
+       
+      <div class="actions">
+        <%= form.submit "Update", class: "btn btn-dark"%>
+      </div>
+      </p>
+    <% end %>

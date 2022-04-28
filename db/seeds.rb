@@ -15,3 +15,8 @@ end
 end
 
 AdminUser.create(email: "admin@test.com", password: "password")
+
+CompanyValue.create(title: "Honesty")
+CompanyValue.create(title: "Ownership")
+CompanyValue.create(title: "Accountability")
+CompanyValue.create(title: "Passion")
