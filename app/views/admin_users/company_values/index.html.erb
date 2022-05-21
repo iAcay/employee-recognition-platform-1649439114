@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover table caption-top">
+    <caption class="text-center"><h1>Company Values Admin Panel &#128142;</h1></caption>
+    <thead class="table-dark">
+      <tr class="text-center">
+        <th>Company Value</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @company_values.each do |company_value| %>
+        <tr class="text-center">
+          <td><%= company_value.title %></td>
+          <td><%= link_to 'Edit', edit_admin_users_company_value_path(company_value), class: 'btn btn-outline-primary' %></td>
+          <td><%= link_to 'Destroy', admin_users_company_value_path(company_value), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Back to Admin Dashboard', dashboard_admin_users_pages_path, class:'btn btn-outline-secondary' %>
+  <%= link_to 'New Company Value', new_admin_users_company_value_path, class:'btn btn-outline-primary' %> 
+</div>
