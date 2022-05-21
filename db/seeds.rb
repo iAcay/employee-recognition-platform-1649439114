@@ -6,17 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts 'Creating employee accounts'
 1.upto(5) do |i|
-  Employee.create(email: "employee#{i}@test.com", password: 'password')
+  Employee.where(email: "employee#{i}@test.com").first_or_create!(password: 'password')
 end
 
+puts 'Creating kudos'
 1.upto(4) do |i|
-  Kudo.create(title: "#{i}.From seed", content: "His work is awesome! He did what he should three times faster than others! Really great!", giver: Employee.find_by(email: "employee#{i}@test.com"), receiver: Employee.find_by(email: "employee#{5 - i}@test.com"))
+  Kudo.where(title: "#{i}.From seed", content: "His work is awesome! He did what he should three times faster than others! Really great!", giver: Employee.find_by(email: "employee#{i}@test.com"), receiver: Employee.find_by(email: "employee#{5 - i}@test.com")).first_or_create!
 end
 
-AdminUser.create(email: "admin@test.com", password: "password")
+puts 'Creating admin account'
+AdminUser.where(email: "admin@test.com").first_or_create!(password: "password")
 
-CompanyValue.create(title: "Honesty")
-CompanyValue.create(title: "Ownership")
-CompanyValue.create(title: "Accountability")
-CompanyValue.create(title: "Passion")
+puts 'Creating company values'
+CompanyValue.create(title: "Honesty").first_or_create!
+CompanyValue.create(title: "Ownership").first_or_create!
+CompanyValue.create(title: "Accountability").first_or_create!
+CompanyValue.create(title: "Passion").first_or_create!
