@@ -1,6 +1,6 @@
 module AdminUsers
   class CompanyValuesController < ApplicationController
-    before_action :set_company_value, only: %i[edit update destroy]
+    before_action :company_value, only: %i[edit update destroy]
     before_action :authenticate_admin_user!
 
     # GET /company values
@@ -45,7 +45,7 @@ module AdminUsers
     private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_company_value
+    def company_value
       @company_value = CompanyValue.find(params[:id])
     end
 

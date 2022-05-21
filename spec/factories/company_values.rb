@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :company_value do
-    title { 'Random Title' }
+    title { 'Company Value Title' }
   end
 end

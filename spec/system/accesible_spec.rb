@@ -9,8 +9,8 @@ RSpec.describe 'Accesible tests', type: :system do
     driven_by(:rack_test)
   end
 
-  context 'when as an admin' do
-    it 'unenabled to sign in as an employee' do
+  context 'when logged in as an admin' do
+    it "can't access employees signin page" do
       sign_in admin_user
       visit 'employees/sign_in'
 
@@ -18,7 +18,7 @@ RSpec.describe 'Accesible tests', type: :system do
       expect(page).to have_content 'Admin dashboard'
     end
 
-    it 'unenabled to sign up as an employee' do
+    it "can't access employee signup page" do
       sign_in admin_user
       visit 'employees/sign_up'
 
@@ -27,8 +27,8 @@ RSpec.describe 'Accesible tests', type: :system do
     end
   end
 
-  context 'when as an employee' do
-    it 'unenabled to sign in as an admin' do
+  context 'when logged in as an employee' do
+    it "can't access admin signin page" do
       sign_in employee
       visit '/admin'
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'factory_bot_rails'
 
-RSpec.describe 'Modifying company values', type: :system do
+RSpec.describe 'Admin Company Values CRUD', type: :system do
   let(:admin_user) { create(:admin_user) }
   let!(:company_value) { create(:company_value) }
 
@@ -17,7 +17,7 @@ RSpec.describe 'Modifying company values', type: :system do
       go_to_form_new_company_value
 
       fill_in 'Title', with: 'First Title'
-      click_button 'Update'
+      click_button 'Create'
 
       expect(CompanyValue.count).to eq 2
       expect(page).to have_content 'Company Value was successfully created.'
@@ -29,13 +29,13 @@ RSpec.describe 'Modifying company values', type: :system do
       go_to_form_new_company_value
 
       fill_in 'Title', with: ''
-      click_button 'Update'
+      click_button 'Create'
 
       expect(CompanyValue.count).to eq 1
       expect(page).to have_content "Title can't be blank"
 
       fill_in 'Title', with: company_value.title
-      click_button 'Update'
+      click_button 'Create'
 
       expect(CompanyValue.count).to eq 1
       expect(page).to have_content 'Title has already been taken'
@@ -62,7 +62,7 @@ RSpec.describe 'Modifying company values', type: :system do
       expect(page).to have_content 'Destroy'
     end
 
-    it 'unenabled to list without log in' do
+    it 'does not allow to access page without loggin in as an admin' do
       sign_out admin_user
       visit '/admin/company_values'
 
@@ -76,7 +76,7 @@ RSpec.describe 'Modifying company values', type: :system do
       click_link 'Go to Company Values Admin Panel'
 
       expect(page).to have_content company_value.title
-      expect(company_value.title).to eq 'Random Title'
+      expect(company_value.title).to eq 'Company Value Title'
 
       click_link 'Edit'
       fill_in 'Title', with: 'New Title of Company Value'

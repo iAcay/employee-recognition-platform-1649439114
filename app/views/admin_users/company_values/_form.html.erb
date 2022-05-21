@@ -13,7 +13,8 @@
       </p>
        
       <div class="actions">
-        <%= form.submit "Update", class: "btn btn-dark"%>
+        <%= form.submit(@company_value.new_record? ? "Create" : "Update", class: "btn btn-dark")%>
       </div>
       </p>
     <% end %>
+    
