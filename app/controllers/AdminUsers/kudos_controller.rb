@@ -1,7 +1,6 @@
 module AdminUsers
-  class KudosController < ApplicationController
-    before_action :set_admin_users_kudo, only: %i[destroy]
-    before_action :authenticate_admin_user!
+  class KudosController < BaseController
+    before_action :admin_users_kudo, only: %i[destroy]
 
     # GET /kudos
     def index
@@ -18,7 +17,7 @@ module AdminUsers
     private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_admin_users_kudo
+    def admin_users_kudo
       @admin_users_kudo = Kudo.find(params[:id])
     end
   end
