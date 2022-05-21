@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'factory_bot_rails'
 
-RSpec.describe 'Modifying kudos', type: :system do
+RSpec.describe 'Listing and deleting kudos by admin', type: :system do
   let(:admin_user) { create(:admin_user) }
   let!(:kudo) { create(:kudo) }
 
