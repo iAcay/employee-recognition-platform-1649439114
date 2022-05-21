@@ -4,29 +4,9 @@ module AdminUsers
   class SessionsController < Devise::SessionsController
     include Accessible
     before_action :check_employee
-    # before_action :configure_sign_in_params, only: [:create]
 
-    # GET /resource/sign_in
-    # def new
-    #   super
-    # end
+    layout 'admin_user'
 
-    # POST /resource/sign_in
-    # def create
-    #   super
-    # end
-
-    # DELETE /resource/sign_out
-    # def destroy
-    #  super
-    # end
-
-    # protected
-
-    # If you have extra params to permit, append them to the sanitizer.
-    # def configure_sign_in_params
-    #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-    # end
     def after_sign_in_path_for(_resource)
       dashboard_admin_users_pages_path
     end

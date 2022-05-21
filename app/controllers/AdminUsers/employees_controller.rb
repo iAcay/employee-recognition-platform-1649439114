@@ -1,7 +1,6 @@
 module AdminUsers
-  class EmployeesController < ApplicationController
+  class EmployeesController < BaseController
     before_action :set_employee, only: %i[edit update destroy]
-    before_action :authenticate_admin_user!
 
     # GET
     def index

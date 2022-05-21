@@ -17,6 +17,7 @@ RSpec.describe 'Signing admin', type: :system do
       click_button 'Log in'
 
       expect(page).to have_content 'Signed in successfully.'
+      expect(page).to have_content 'Admin dashboard'
 
       # ADMIN SIGN OUT
       click_link 'Sign out'

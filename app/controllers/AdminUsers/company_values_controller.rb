@@ -1,7 +1,6 @@
 module AdminUsers
-  class CompanyValuesController < ApplicationController
+  class CompanyValuesController < BaseController
     before_action :company_value, only: %i[edit update destroy]
-    before_action :authenticate_admin_user!
 
     # GET /company values
     def index
