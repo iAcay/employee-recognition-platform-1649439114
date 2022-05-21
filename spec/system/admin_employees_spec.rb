@@ -44,6 +44,7 @@ RSpec.describe 'Modifying employees', type: :system do
 
       expect(page).to have_content 'Employee was successfully updated.'
       expect(employee.email).to eq 'changed@mail.com'
+      expect(employee.valid_password?("password1")).to be true
       expect(employee.number_of_available_kudos).to eq 7
     end
 
