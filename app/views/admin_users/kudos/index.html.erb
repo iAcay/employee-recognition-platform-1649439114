@@ -12,13 +12,13 @@
     </thead>
 
     <tbody>
-      <% @admin_users_kudos.each do |admin_users_kudo| %>
+      <% kudos.each do |kudo| %>
         <tr class="text-center">
-          <td><%= admin_users_kudo.title %></td>
-          <td><%= admin_users_kudo.content %></td>
-          <td><%= admin_users_kudo.giver.email %></td>
-          <td><%= admin_users_kudo.receiver.email %></td>
-          <td><%= link_to 'Destroy', admin_users_kudo_path(admin_users_kudo), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
+          <td><%= kudo.title %></td>
+          <td><%= kudo.content %></td>
+          <td><%= kudo.giver.email %></td>
+          <td><%= kudo.receiver.email %></td>
+          <td><%= link_to 'Destroy', admin_users_kudo_path(kudo), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
         </tr>
       <% end %>
     </tbody>

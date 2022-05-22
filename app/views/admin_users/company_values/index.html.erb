@@ -10,7 +10,7 @@
     </thead>
 
     <tbody>
-      <% @company_values.each do |company_value| %>
+      <% company_values.each do |company_value| %>
         <tr class="text-center">
           <td><%= company_value.title %></td>
           <td><%= link_to 'Edit', edit_admin_users_company_value_path(company_value), class: 'btn btn-outline-primary' %></td>

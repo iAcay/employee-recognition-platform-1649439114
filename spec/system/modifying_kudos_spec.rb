@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'factory_bot_rails'
 
-RSpec.describe 'Modifying kudos', type: :system do
+RSpec.describe 'Working on kudos', type: :system do
   let(:employee) { create(:employee) }
 
   before do
