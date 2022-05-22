@@ -1,36 +1,34 @@
 module AdminUsers
   class EmployeesController < BaseController
-    before_action :set_employee, only: %i[edit update destroy]
-
-    # GET
     def index
-      @employees = Employee.all
+      render :index, locals: { employees: Employee.all.order(:email) }
     end
 
-    def edit; end
+    def edit
+      render :edit, locals: { employee: employee }
+    end
 
     def update
       if employee_params[:password].blank?
-        return render :edit unless @employee.update_without_password(employee_params.except(:password))
+        return render :edit unless employee.update_without_password(employee_params.except(:password))
 
         redirect_to admin_users_employees_path, notice: 'Employee was successfully updated.'
-      elsif @employee.update(employee_params)
+      elsif employee.update(employee_params)
         redirect_to admin_users_employees_path, notice: 'Employee was successfully updated.'
       else
-        render :edit
+        render :edit, locals: { employee: employee }
       end
     end
 
-    # DELETE
     def destroy
-      @employee.destroy
+      employee.destroy
       redirect_to admin_users_employees_path, notice: 'Employee was successfully destroyed.'
     end
 
     private
 
-    def set_employee
-      @employee = Employee.find(params[:id])
+    def employee
+      @employee ||= Employee.find(params[:id])
     end
 
     def employee_params

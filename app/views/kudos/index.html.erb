@@ -13,7 +13,7 @@
       </thead>
 
       <tbody>
-        <% @kudos.each do |kudo| %>
+        <% kudos.each do |kudo| %>
           <tr class="text-center">
             <td><%= link_to kudo.title, kudo %></td>
             <td><%= kudo.content %></td>
