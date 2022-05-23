@@ -3,6 +3,7 @@ require 'factory_bot_rails'
 
 RSpec.describe 'Available number of kudos', type: :system do
   let(:employee) { create(:employee) }
+  let!(:company_value) { create(:company_value) }
 
   before do
     driven_by(:rack_test)
@@ -16,8 +17,10 @@ RSpec.describe 'Available number of kudos', type: :system do
       visit root_path
       create_new_kudo
 
+      employee.reload
       expect(page).to have_content 'Available: 9'
       expect(Kudo.count).to eq 1
+      expect(employee.number_of_available_kudos).to eq 9
 
       # AFTER CREATING TEN KUDOS
       9.times do
@@ -38,8 +41,10 @@ RSpec.describe 'Available number of kudos', type: :system do
 
       click_link 'New Kudo'
 
+      employee.reload
       expect(page).to have_content 'You cannot add more kudos.'
       expect(Kudo.count).to eq 10
+      expect(employee.number_of_available_kudos).to eq 0
     end
   end
 end
@@ -48,5 +53,6 @@ def create_new_kudo
   click_link 'New Kudo'
   fill_in 'Title', with: 'Great Worker!!'
   fill_in 'Content', with: 'Three times faster than others!'
+  select company_value.title, from: 'Company value'
   click_button 'Create Kudo'
 end
