@@ -20,7 +20,7 @@ puts 'Creating admin account'
 AdminUser.where(email: "admin@test.com").first_or_create!(password: "password")
 
 puts 'Creating company values'
-CompanyValue.create(title: "Honesty").first_or_create!
-CompanyValue.create(title: "Ownership").first_or_create!
-CompanyValue.create(title: "Accountability").first_or_create!
-CompanyValue.create(title: "Passion").first_or_create!
+CompanyValue.where(title: "Honesty").first_or_create!
+CompanyValue.where(title: "Ownership").first_or_create!
+CompanyValue.where(title: "Accountability").first_or_create!
+CompanyValue.where(title: "Passion").first_or_create!
