@@ -31,8 +31,12 @@ module AdminUsers
     end
 
     def destroy
-      company_value.destroy
-      redirect_to admin_users_company_values_url, notice: 'Company Value was successfully destroyed.'
+      if company_value.destroy
+        redirect_to admin_users_company_values_url, notice: 'Company Value was successfully destroyed.'
+      else
+        redirect_to admin_users_company_values_path,
+                    notice: 'This company value cannot be deleted because of its relations with existing kudos.'
+      end
     end
 
     private
