@@ -1,7 +1,7 @@
 module AdminUsers
   class KudosController < BaseController
     def index
-      render :index, locals: { kudos: Kudo.includes(:receiver, :giver).all.order('created_at DESC') }
+      render :index, locals: { kudos: Kudo.includes(:receiver, :giver, :company_value).all.order('created_at DESC') }
     end
 
     def destroy
