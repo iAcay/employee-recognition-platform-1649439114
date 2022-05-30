@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :kudos, only: [:index, :destroy]
     resources :employees, only: [:index, :edit, :update, :destroy]
     resources :company_values, except: [:show]
+    resources :rewards
     resources :pages, only: [] do
       collection do
         get :dashboard
