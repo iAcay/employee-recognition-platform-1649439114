@@ -7,7 +7,8 @@
         <th>Content</th>
         <th>Giver</th>
         <th>Receiver</th>
-        <th>Modification</th>
+        <th>Company Value</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
@@ -18,6 +19,7 @@
           <td><%= kudo.content %></td>
           <td><%= kudo.giver.email %></td>
           <td><%= kudo.receiver.email %></td>
+          <td><%= kudo.company_value.title %></td>
           <td><%= link_to 'Destroy', admin_users_kudo_path(kudo), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
         </tr>
       <% end %>

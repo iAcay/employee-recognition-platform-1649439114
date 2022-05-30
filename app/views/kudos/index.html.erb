@@ -8,7 +8,8 @@
           <th>Content</th>
           <th>Giver</th>
           <th>Receiver</th>
-          <th>Modification</th>
+          <th>Company Value</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -19,6 +20,7 @@
             <td><%= kudo.content %></td>
             <td><%= kudo.giver.email %></td>
             <td><%= kudo.receiver.email %></td>
+            <td><%= kudo.company_value.title %></td>
             <% if kudo.giver == current_employee %>
               <td>
                 <%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-outline-primary' %>

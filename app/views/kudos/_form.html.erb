@@ -11,26 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field form-group">
+  <div class="field form-group mb-3">
     <%= form.label :title %>
     <%= form.text_field :title, class:"form-control", placeholder:"Title" %>
   </div>
-  </p>
 
-  <div class="field form-group">
+  <div class="field form-group mb-3">
     <%= form.label :content %>
     <%= form.text_area :content, class:"form-control", placeholder:"Content" %>
   </div>
-  </p>
 
-  <div class="field form-group">
+  <div class="field form-group mb-3">
     <%= form.label :receiver_id %>
     <%= form.collection_select :receiver_id, Employee.where.not(id: current_employee.id), :id, :email%>
   </div>
-  </p>
 
-  <div class="actions">
+  <div class="field form-group mb-3">
+    <%= form.label :company_value_id %>
+    <%= form.collection_select :company_value_id, CompanyValue.order('title ASC'), :id, :title, prompt: true%>
+  </div>
+  
+  <div class="actions mb-3">
     <%= form.submit class:"btn btn-dark" %>
   </div>
-  </p>
 <% end %>

@@ -12,11 +12,13 @@ RSpec.describe 'Working on kudos', type: :system do
 
   context 'when creating a kudo' do
     it 'enables to create a kudo' do
+      company_value = create(:company_value)
       visit root_path
       click_link 'New Kudo'
 
       fill_in 'Title', with: 'Great Worker!!'
       fill_in 'Content', with: 'Three times faster than others!'
+      select company_value.title, from: 'Company value'
       click_button 'Create Kudo'
 
       expect(page).to have_content 'Kudo was successfully created.'
@@ -33,23 +35,31 @@ RSpec.describe 'Working on kudos', type: :system do
 
       expect(page).to have_content "Title can't be blank"
       expect(page).to have_content "Content can't be blank"
+      expect(page).to have_content 'Company value must exist'
     end
   end
 
   context 'when editing a kudo' do
     it 'enables to edit a kudo' do
       kudo = create(:kudo, giver: employee)
+      company_value = create(:company_value, title: 'Company value test')
       visit root_path
+      expect(kudo.title).to eq 'Great Worker!'
+      expect(kudo.content).to eq 'He did his work three times faster than others.'
+      expect(kudo.company_value.title).to eq 'Company Value Title'
+
       click_link 'Edit'
 
       fill_in 'Title', with: 'Super Worker!'
       fill_in 'Content', with: 'He works with really good attitude!'
+      select company_value.title, from: 'Company value'
       click_button 'Update Kudo'
 
       kudo.reload
       expect(page).to have_content 'Kudo was successfully updated.'
       expect(kudo.title).to eq 'Super Worker!'
       expect(kudo.content).to eq 'He works with really good attitude!'
+      expect(kudo.company_value.title).to eq 'Company value test'
     end
 
     it 'checks validation' do

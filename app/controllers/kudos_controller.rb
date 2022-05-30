@@ -4,7 +4,7 @@ class KudosController < ApplicationController
   before_action :can_add_another_kudo?, only: %i[new create]
 
   def index
-    render :index, locals: { kudos: Kudo.includes(:receiver, :giver).all.order('created_at DESC') }
+    render :index, locals: { kudos: Kudo.includes(:receiver, :giver, :company_value).all.order('created_at DESC') }
   end
 
   def show
@@ -54,7 +54,7 @@ class KudosController < ApplicationController
   end
 
   def kudo_params
-    params.require(:kudo).permit(:title, :content, :giver_id, :receiver_id)
+    params.require(:kudo).permit(:title, :content, :giver_id, :receiver_id, :company_value_id)
   end
 
   def correct_employee?
