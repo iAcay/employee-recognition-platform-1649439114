@@ -4,7 +4,7 @@ class KudosController < ApplicationController
   before_action :can_add_another_kudo?, only: %i[new create]
 
   def index
-    render :index, locals: { kudos: Kudo.includes(:receiver, :giver, :company_value).all.order('created_at DESC') }
+    render :index, locals: { kudos: Kudo.includes(:receiver, :giver, :company_value).all.order(created_at: :desc) }
   end
 
   def show

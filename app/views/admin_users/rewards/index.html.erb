@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover table caption-top">
+    <caption class="text-center"><h1>Rewards Admin Panel &#127942;</h1></caption>
+    <thead class="table-dark">
+      <tr class="text-center">
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% rewards.each do |reward| %>
+        <tr class="text-center">
+          <td><%= reward.title %></td>
+          <td><%= truncate(reward.description, length: 50) %></td>
+          <td><%= reward.price %></td>
+          <td><%= link_to 'Show', admin_users_reward_path(reward), class: 'btn btn-outline-primary' %></td>
+          <td><%= link_to 'Edit', edit_admin_users_reward_path(reward), class: 'btn btn-outline-primary' %></td>
+          <td><%= link_to 'Destroy', admin_users_reward_path(reward), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Back to Admin Dashboard', dashboard_admin_users_pages_path, class:'btn btn-outline-secondary' %>
+  <%= link_to 'New Reward', new_admin_users_reward_path, class:'btn btn-outline-primary' %> 
+</div>

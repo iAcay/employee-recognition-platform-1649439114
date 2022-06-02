@@ -1,7 +1,7 @@
 module AdminUsers
   class CompanyValuesController < BaseController
     def index
-      render :index, locals: { company_values: CompanyValue.all.order('title ASC') }
+      render :index, locals: { company_values: CompanyValue.all.order(title: :asc) }
     end
 
     def new
