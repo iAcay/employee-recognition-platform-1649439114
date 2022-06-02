@@ -19,6 +19,9 @@
             <%= link_to 'Company Values', admin_users_company_values_path, class:"nav-link" %>
           </li>
           <li class="nav-item">
+            <%= link_to 'Rewards', admin_users_rewards_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
             <%= link_to 'Sign out', destroy_admin_user_session_path, method: :delete, class:"nav-link" %>
           </li>
         <% else %>
