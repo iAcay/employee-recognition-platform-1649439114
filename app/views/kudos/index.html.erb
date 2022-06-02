@@ -9,7 +9,7 @@
           <th>Giver</th>
           <th>Receiver</th>
           <th>Company Value</th>
-          <th>Actions</th>
+          <th colspan="2">Actions</th>
         </tr>
       </thead>
 
@@ -22,11 +22,10 @@
             <td><%= kudo.receiver.email %></td>
             <td><%= kudo.company_value.title %></td>
             <% if kudo.giver == current_employee %>
-              <td>
-                <%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-outline-primary' %>
-                <%= link_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %>
-              </td>
+              <td><%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-outline-primary' %></td>
+              <td><%= link_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
             <% else %>
+              <td><%= link_to 'Unauthorized', kudos_path, class:'btn btn-outline-warning' %></td>
               <td><%= link_to 'Unauthorized', kudos_path, class:'btn btn-outline-warning' %></td>
             <% end %>
           </tr>
