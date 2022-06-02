@@ -1,0 +1,18 @@
+<div class="shadow p-3 mb-5 bg-body rounded">
+  <figure class="text-end">
+    <figcaption class="block-footer">
+      <strong>Price:</strong>
+      <%= reward.price %>
+    </figcaption>
+  </figure>
+
+  <h2 class="display-6">
+    <%= reward.title %>
+  </h2>
+
+  <div class="lead text-break" style="width: 80rem;">
+    <em><%= reward.description %></em>
+  </div>
+
+  <%= link_to 'Back to Rewards', rewards_path, class:"btn btn-dark mt-3" %>
+</div>

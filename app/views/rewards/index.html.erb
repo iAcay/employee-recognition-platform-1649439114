@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover table caption-top">
+    <caption class="text-center"><h1>Rewards &#127942;</h1></caption>
+    <thead class="table-dark">
+      <tr class="text-center">
+        <th>Title</th>
+        <th>Price</th>
+        <th colspan="1">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% rewards.each do |reward| %>
+        <tr class="text-center">
+          <td><%= reward.title %></td>
+          <td><%= reward.price %></td>
+          <td><%= link_to 'Show', reward_path(reward), class: 'btn btn-outline-primary' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
