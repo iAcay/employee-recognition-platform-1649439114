@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   devise_for :employees, path: 'employees', controllers: { sessions: "employees/sessions", registrations: "employees/registrations" }
 
   resources :kudos
+  resources :rewards, only: [:index, :show]
   
   namespace :admin_users, path: 'admin' do
     resources :kudos, only: [:index, :destroy]
