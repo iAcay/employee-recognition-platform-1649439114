@@ -23,7 +23,7 @@ RSpec.describe 'Available number of kudos', type: :system do
       click_button 'Create Kudo'
 
       employee.reload
-      expect(page).to have_content 'Available: 9'
+      expect(page).to have_content 'Available kudos: 9'
       expect(Kudo.count).to eq 1
       expect(employee.number_of_available_kudos).to eq 9
     end
@@ -36,7 +36,7 @@ RSpec.describe 'Available number of kudos', type: :system do
 
     it 'maximum number of available kudos' do
       visit root_path
-      expect(page).to have_content 'Available: 0'
+      expect(page).to have_content 'Available kudos: 0'
 
       click_link 'New Kudo'
 
