@@ -37,9 +37,9 @@ class KudosController < ApplicationController
     if params[:receiver_id] != kudo.receiver.id
       previous_receiver = kudo.receiver
       if kudo.update(kudo_params)
-        redirect_to kudo, notice: 'Kudo was successfully updated.'
         kudo.receiver.increment(:earned_points).save
         previous_receiver.decrement(:earned_points).save
+        redirect_to kudo, notice: 'Kudo was successfully updated.'
       else
         render :edit, locals: { kudo: kudo }
       end
@@ -55,9 +55,9 @@ class KudosController < ApplicationController
 
     return unless kudo.destroy
 
-    redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
     current_employee.increment(:number_of_available_kudos).save
     previous_receiver.decrement(:earned_points).save
+    redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
   end
 
   private
