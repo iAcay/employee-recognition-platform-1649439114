@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'factory_bot_rails'
 
-RSpec.describe 'Working on earned points', type: :system do
+RSpec.describe 'Earned points', type: :system do
   let!(:giver) { create(:employee) }
   let!(:receiver) { create(:employee) }
   let!(:company_value) { create(:company_value) }
@@ -12,7 +12,7 @@ RSpec.describe 'Working on earned points', type: :system do
   end
 
   context 'when displaying earned points by receiver' do
-    it 'enables to display the number of earned points' do
+    it 'displays the number of earned points' do
       sign_in receiver
       visit root_path
 
