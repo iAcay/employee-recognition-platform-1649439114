@@ -5,7 +5,7 @@
       <tr class="text-center">
         <th>Title</th>
         <th>Price</th>
-        <th colspan="1">Actions</th>
+        <th colspan="2">Actions</th>
       </tr>
     </thead>
 
@@ -15,6 +15,7 @@
           <td><%= reward.title %></td>
           <td><%= reward.price %></td>
           <td><%= link_to 'Show', reward_path(reward), class: 'btn btn-outline-primary' %></td>
+          <td><%= link_to 'Buy', buy_reward_rewards_path(reward), method: :post, data: { confirm: 'Are you sure you want to purchase this reward?' }, class: 'btn btn-outline-success' %></td>
         </tr>
       <% end %>
     </tbody>
