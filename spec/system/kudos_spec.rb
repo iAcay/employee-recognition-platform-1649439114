@@ -2,22 +2,25 @@ require 'rails_helper'
 require 'factory_bot_rails'
 
 RSpec.describe 'Working on kudos', type: :system do
-  let(:employee) { create(:employee) }
+  let!(:giver) { create(:employee) }
+  let!(:receiver) { create(:employee) }
+  let!(:company_value) { create(:company_value) }
+  let!(:kudo) { build(:kudo, giver: giver, receiver: receiver, company_value: company_value) }
 
   before do
     driven_by(:rack_test)
-    create(:employee, email: 'receiver@example.com')
-    sign_in employee
   end
 
   context 'when creating a kudo' do
-    it 'enables to create a kudo' do
-      company_value = create(:company_value)
+    before do
+      sign_in giver
       visit root_path
       click_link 'New Kudo'
+    end
 
-      fill_in 'Title', with: 'Great Worker!!'
-      fill_in 'Content', with: 'Three times faster than others!'
+    it 'enables to create a kudo' do
+      fill_in 'Title', with: kudo.title
+      fill_in 'Content', with: kudo.content
       select company_value.title, from: 'Company value'
       click_button 'Create Kudo'
 
@@ -25,10 +28,20 @@ RSpec.describe 'Working on kudos', type: :system do
       expect(Kudo.count).to eq 1
     end
 
-    it 'checks validation' do
-      visit root_path
-      click_link 'New Kudo'
+    it 'increases the number of earned points after creating a kudo' do
+      receiver.reload
+      expect(receiver.earned_points).to eq 0
 
+      fill_in 'Title', with: kudo.title
+      fill_in 'Content', with: kudo.content
+      select company_value.title, from: 'Company value'
+      click_button 'Create Kudo'
+
+      receiver.reload
+      expect(receiver.earned_points).to eq 1
+    end
+
+    it 'checks validation' do
       fill_in 'Title', with: ''
       fill_in 'Content', with: ''
       click_button 'Create Kudo'
@@ -40,30 +53,62 @@ RSpec.describe 'Working on kudos', type: :system do
   end
 
   context 'when editing a kudo' do
-    it 'enables to edit a kudo' do
-      kudo = create(:kudo, giver: employee)
-      company_value = create(:company_value, title: 'Company value test')
+    before do
+      sign_in giver
       visit root_path
-      expect(kudo.title).to eq 'Great Worker!'
-      expect(kudo.content).to eq 'He did his work three times faster than others.'
-      expect(kudo.company_value.title).to eq 'Company Value Title'
+    end
 
+    it 'enables to edit a kudo' do
+      new_company_value = create(:company_value, title: 'Company Value test')
+      edited_kudo = create(:kudo, giver: giver, company_value: company_value)
+
+      expect(edited_kudo.title).to eq 'Great Worker!'
+      expect(edited_kudo.content).to eq 'He did his work three times faster than others.'
+      expect(edited_kudo.company_value.title).to eq 'Company Value Title'
+
+      visit root_path
       click_link 'Edit'
-
       fill_in 'Title', with: 'Super Worker!'
       fill_in 'Content', with: 'He works with really good attitude!'
-      select company_value.title, from: 'Company value'
+      select new_company_value.title, from: 'Company value'
       click_button 'Update Kudo'
 
-      kudo.reload
+      edited_kudo.reload
       expect(page).to have_content 'Kudo was successfully updated.'
-      expect(kudo.title).to eq 'Super Worker!'
-      expect(kudo.content).to eq 'He works with really good attitude!'
-      expect(kudo.company_value.title).to eq 'Company value test'
+      expect(edited_kudo.title).to eq 'Super Worker!'
+      expect(edited_kudo.content).to eq 'He works with really good attitude!'
+      expect(edited_kudo.company_value.title).to eq 'Company Value test'
+    end
+
+    it 'changes the number of earned points after changing kudo receiver' do
+      click_link 'New Kudo'
+      fill_in 'Title', with: kudo.title
+      fill_in 'Content', with: kudo.content
+      select company_value.title, from: 'Company value'
+      click_button 'Create Kudo'
+
+      new_receiver = create(:employee)
+      previous_receiver = receiver
+
+      new_receiver.reload
+      previous_receiver.reload
+      expect(new_receiver.earned_points).to eq 0
+      expect(previous_receiver.earned_points).to eq 1
+
+      # Change kudo receiver
+      visit root_path
+      click_link 'Edit'
+      select new_receiver.email, from: 'Receiver'
+      click_button 'Update Kudo'
+
+      new_receiver.reload
+      previous_receiver.reload
+      expect(new_receiver.earned_points).to eq 1
+      expect(previous_receiver.earned_points).to eq 0
     end
 
     it 'checks validation' do
-      create(:kudo, giver: employee)
+      create(:kudo, giver: giver, company_value: company_value)
       visit root_path
       click_link 'Edit'
 
@@ -76,26 +121,47 @@ RSpec.describe 'Working on kudos', type: :system do
     end
 
     it 'checks authorization' do
-      kudo = create(:kudo)
+      new_kudo = create(:kudo, company_value: company_value)
       visit root_path
 
       expect(page).to have_content 'Unauthorized'
 
-      visit "kudos/#{kudo.id}/edit"
+      visit "kudos/#{new_kudo.id}/edit"
 
       expect(page).to have_content 'Not authorized to edit this Kudo.'
     end
   end
 
-  context 'when destroying a kudo' do
-    let!(:kudo) { create(:kudo, giver: employee) }
+  context 'when deleting a kudo' do
+    before do
+      sign_in giver
+      visit root_path
+      click_link 'New Kudo'
+      fill_in 'Title', with: kudo.title
+      fill_in 'Content', with: kudo.content
+      select company_value.title, from: 'Company value'
+      click_button 'Create Kudo'
+    end
 
-    it 'enables to destroy a kudo' do
+    it 'enables to delete a kudo' do
+      expect(Kudo.count).to eq 1
       visit root_path
       click_link 'Destroy'
 
       expect(page).to have_content 'Kudo was successfully destroyed.'
       expect(Kudo.count).to eq 0
+    end
+
+    it 'decreases the number of earned points after deleting kudo' do
+      receiver.reload
+      expect(receiver.earned_points).to eq 1
+
+      # Delete kudo
+      visit root_path
+      click_link 'Destroy'
+
+      receiver.reload
+      expect(receiver.earned_points).to eq 0
     end
   end
 end
