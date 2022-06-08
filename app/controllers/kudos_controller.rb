@@ -24,10 +24,9 @@ class KudosController < ApplicationController
     record.giver = current_employee
 
     if record.save
-      redirect_to kudos_path, notice: 'Kudo was successfully created.'
-
       current_employee.decrement(:number_of_available_kudos).save
       record.receiver.increment(:earned_points).save
+      redirect_to kudos_path, notice: 'Kudo was successfully created.'
     else
       render :new, locals: { kudo: record }
     end
