@@ -26,14 +26,24 @@ class KudosController < ApplicationController
     if record.save
       redirect_to kudos_path, notice: 'Kudo was successfully created.'
 
-      current_employee.update(number_of_available_kudos: current_employee.number_of_available_kudos - 1)
+      current_employee.decrement(:number_of_available_kudos).save
+      record.receiver.increment(:earned_points).save
     else
       render :new, locals: { kudo: record }
     end
   end
 
   def update
-    if kudo.update(kudo_params)
+    if params[:receiver_id] != kudo.receiver.id
+      previous_receiver = kudo.receiver
+      if kudo.update(kudo_params)
+        kudo.receiver.increment(:earned_points).save
+        previous_receiver.decrement(:earned_points).save
+        redirect_to kudo, notice: 'Kudo was successfully updated.'
+      else
+        render :edit, locals: { kudo: kudo }
+      end
+    elsif kudo.update(kudo_params)
       redirect_to kudo, notice: 'Kudo was successfully updated.'
     else
       render :edit, locals: { kudo: kudo }
@@ -41,10 +51,13 @@ class KudosController < ApplicationController
   end
 
   def destroy
-    kudo.destroy
-    redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
+    previous_receiver = kudo.receiver
 
-    current_employee.update(number_of_available_kudos: current_employee.number_of_available_kudos + 1)
+    return unless kudo.destroy
+
+    current_employee.increment(:number_of_available_kudos).save
+    previous_receiver.decrement(:earned_points).save
+    redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
   end
 
   private

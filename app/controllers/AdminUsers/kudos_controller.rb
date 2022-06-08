@@ -5,9 +5,11 @@ module AdminUsers
     end
 
     def destroy
-      kudo.destroy
+      return unless kudo.destroy
+
       redirect_to admin_users_kudos_path, notice: 'Kudo was successfully destroyed.'
-      kudo.giver.update(number_of_available_kudos: kudo.giver.number_of_available_kudos + 1)
+      kudo.giver.increment(:number_of_available_kudos).save
+      kudo.receiver.decrement(:earned_points).save
     end
 
     private
