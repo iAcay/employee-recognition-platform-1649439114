@@ -20,6 +20,8 @@ RSpec.describe 'Earned points', type: :system do
       expect(employee.earned_points).to eq 2
       click_link 'Rewards'
       click_link 'Buy'
+      expect(page).to have_content 'Order details:'
+      click_button 'Buy'
 
       expect(page).to have_content "Reward: #{reward.title} was successfully bought. Congratulations!"
       expect(page).to have_content "Points: #{employee.earned_points - reward.price.to_i}"
