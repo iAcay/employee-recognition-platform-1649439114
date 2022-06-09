@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :kudos
   resources :rewards, only: [:index, :show] do
     collection do
-      post 'buy_reward/:id', to: 'rewards#buy_reward', as: 'buy_reward'
+      resources :orders, only: %i[index new create]
     end
   end
   
