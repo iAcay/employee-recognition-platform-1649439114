@@ -1,0 +1,43 @@
+ <%= form_with(model: order) do |form| %>
+  <div class="form-group mt-3">
+    <% order.errors.each do |error| %>
+      <li><strong><%= error.full_message %></strong></li>
+    <% end %>
+  </div>
+
+  <div class="field form-group mt-3">
+    <table class='table'>
+      <thead>
+        <tr>
+          <th colspan="2", class="text-center"><h4>Order details:</h4></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reward title:</td>
+          <td><%= @reward.title %></td>
+        </tr>
+        <tr>
+          <td>Reward price:</td>
+          <td><%= @reward.price %></td>
+        </tr>
+        <tr>
+          <td>Buyer's email:</td>
+          <td><%= current_employee.email %></td>
+        </tr>
+        <tr>
+          <td>Points before purchase:</td>
+          <td><%= current_employee.earned_points %></td>
+        </tr>
+        <tr>
+          <td>Points after purchase:</td>
+          <td><%= current_employee.earned_points - @reward.price %></td>
+        </tr>
+      </tbody>      
+    </table>
+  
+    <%= form.hidden_field :reward_id, value: @reward.id %>
+    <%= form.hidden_field :employee_id, value: current_employee.id %>
+    <%= form.submit "Buy", data: { confirm: 'Are you sure you want to purchase this reward?'}, class: "btn btn-dark btn-lg" %>
+  </div>
+<% end %>
