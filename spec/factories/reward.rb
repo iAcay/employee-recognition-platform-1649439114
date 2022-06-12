@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :reward do
     title { 'Reward Title' }
     description { 'Reward Description' }
-    price { 100 }
+    price { 1 }
   end
 end

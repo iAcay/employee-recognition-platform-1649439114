@@ -7,9 +7,9 @@ module AdminUsers
     def destroy
       return unless kudo.destroy
 
-      redirect_to admin_users_kudos_path, notice: 'Kudo was successfully destroyed.'
       kudo.giver.increment(:number_of_available_kudos).save
       kudo.receiver.decrement(:earned_points).save
+      redirect_to admin_users_kudos_path, notice: 'Kudo was successfully destroyed.'
     end
 
     private

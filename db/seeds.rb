@@ -34,7 +34,7 @@ puts '✅'
 
 puts 'Creating rewards'
 1.upto(5) do |i|
-  Reward.where(title: "Reward no. #{i}.", description: "Description of reward no. #{i}.", price: 100 + i).first_or_create!
+  Reward.where(title: "Reward no. #{i}.", description: "Description of reward no. #{i}.", price: i).first_or_create!
   print '✔'
 end
 puts '✅'
