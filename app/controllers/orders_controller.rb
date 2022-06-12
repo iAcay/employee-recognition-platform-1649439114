@@ -20,10 +20,15 @@ class OrdersController < ApplicationController
                                           You need #{@reward.price - current_employee.earned_points} points more."
     else
       @order = Order.new(order_params)
-      if @order.save && current_employee.decrement(:earned_points, @reward.price).save
-        redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
+      begin
+        ActiveRecord::Base.transaction do
+          @order.save!
+          current_employee.decrement(:earned_points, @reward.price).save!
+        end
+      rescue StandardError
+        redirect_to rewards_path, notice: 'Unfortunately something went wrong :('
       else
-        render :new, locals: { order: @order }
+        redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
       end
     end
   end
