@@ -62,10 +62,12 @@ ActiveRecord::Schema.define(version: 2022_06_08_184748) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.bigint "employee_id"
-    t.bigint "reward_id"
+    t.bigint "employee_id", null: false
+    t.bigint "reward_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_orders_on_employee_id"
+    t.index ["reward_id"], name: "index_orders_on_reward_id"
   end
 
   create_table "rewards", force: :cascade do |t|
@@ -79,4 +81,6 @@ ActiveRecord::Schema.define(version: 2022_06_08_184748) do
   add_foreign_key "kudos", "company_values"
   add_foreign_key "kudos", "employees", column: "giver_id"
   add_foreign_key "kudos", "employees", column: "receiver_id"
+  add_foreign_key "orders", "employees"
+  add_foreign_key "orders", "rewards"
 end
