@@ -21,6 +21,7 @@ gem 'devise'
 gem 'net-imap'
 gem 'net-pop'
 gem 'net-smtp', require: false
+gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
   # Debugging tool
