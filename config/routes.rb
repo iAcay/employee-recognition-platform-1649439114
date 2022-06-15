@@ -11,16 +11,16 @@ Rails.application.routes.draw do
   devise_for :employees, path: 'employees', controllers: { sessions: "employees/sessions", registrations: "employees/registrations" }
 
   resources :kudos
-  resources :rewards, only: [:index, :show] do
+  resources :rewards, only: %i[index show] do
     collection do
       resources :orders, only: %i[index new create]
     end
   end
   
   namespace :admin_users, path: 'admin' do
-    resources :kudos, only: [:index, :destroy]
-    resources :employees, only: [:index, :edit, :update, :destroy]
-    resources :company_values, except: [:show]
+    resources :kudos, only: %i[index destroy]
+    resources :employees, only: %i[index edit update destroy]
+    resources :company_values, except: %i[show]
     resources :rewards
     resources :pages, only: [] do
       collection do
