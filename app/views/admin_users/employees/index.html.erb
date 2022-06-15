@@ -5,8 +5,7 @@
       <tr class="text-center">
         <th>Email</th>
         <th>Available kudos</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
@@ -15,8 +14,18 @@
         <tr class="text-center">
           <td><%= employee.email %></td>
           <td><%= employee.number_of_available_kudos %></td>
-          <td><%= link_to 'Edit', edit_admin_users_employee_path(employee), class: 'btn btn-outline-primary' %></td>
-          <td><%= link_to 'Destroy', admin_users_employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Actions
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><%= link_to 'Edit', edit_admin_users_employee_path(employee), class: 'dropdown-item' %></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><%= link_to 'Destroy', admin_users_employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item' %></li>
+              </ul>
+            </div>
+          </td>
         </tr>
       <% end %>
     </tbody>
