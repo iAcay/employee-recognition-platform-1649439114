@@ -1,7 +1,11 @@
 class OrdersController < ApplicationController
   before_action :authenticate_employee!
 
-  def index; end
+  def index
+    render :index, locals: { orders: Order.where(employee: current_employee)
+                                          .paginate(page: params[:page], per_page: 5)
+                                          .order(created_at: :desc) }
+  end
 
   def new
     @reward = Reward.find(params[:reward])
@@ -20,6 +24,7 @@ class OrdersController < ApplicationController
                                           You need #{@reward.price - current_employee.earned_points} points more."
     else
       @order = Order.new(order_params)
+      @order.reward_snapshot = @reward
       begin
         ActiveRecord::Base.transaction do
           @order.save!
@@ -36,6 +41,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:employee_id, :reward_id)
+    params.require(:order).permit(:employee_id, :reward_id, :reward_snapshot)
   end
 end
