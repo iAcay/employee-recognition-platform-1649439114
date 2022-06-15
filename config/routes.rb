@@ -19,7 +19,11 @@ Rails.application.routes.draw do
   
   namespace :admin_users, path: 'admin' do
     resources :kudos, only: %i[index destroy]
-    resources :employees, only: %i[index edit update destroy]
+    resources :employees, only: %i[index edit update destroy] do
+      collection do
+        resources :orders, only: %i[index]
+      end
+    end
     resources :company_values, except: %i[show]
     resources :rewards
     resources :pages, only: [] do
