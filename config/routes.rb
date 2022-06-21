@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :kudos, only: %i[index destroy]
     resources :employees, only: %i[index edit update destroy] do
       collection do
-        resources :orders, only: %i[index]
+        resources :orders, only: %i[index update]
       end
     end
     resources :company_values, except: %i[show]

@@ -1,34 +1,39 @@
-<div class="card border border-dark">
-  <div class="card-header text-center bg-dark text-light">
-    <h2><%= "Orders made by #{employee.email}:" %></h2>
-  </div>
+<div class="text-center">
+  <h2><%= "Orders made by #{employee.email}:" %></h2>
+</div>
 
-  <div class='card-body'>
-    <div class="container col-9">
-      <% orders.each do |order| %>
-        <div class="field form-group mt-3">
-          <div class="p-3 mb-2 bg-white text-dark border border-4">
-            <figcaption class="block-footer">
-              <strong>Price:</strong>
-              <%= order.reward_snapshot.price %>
-            </figcaption>
-
-            <h2 class="display-6 text-center">
-              <%= order.reward_snapshot.title %>
-            </h2>
-
-            <div class="lead text-break text-center mb-3">
-              <em><%= order.reward_snapshot.description %></em>
-            </div>
-
-            <figcaption class="block-footer text-end">
-              <strong>Bought:</strong>
-              <%= order.created_at.strftime('%d-%m-%Y %H:%M') %>
-            </figcaption>
-          </div>
-        </div>
+<div class='card-body'>
+  <div class="container col-9">
+    <% orders.each do |order| %>
+      <div class="field form-group mt-3">
+      <% if order.status_delivered? %>
+        <div class="p-3 mb-2 bg-secondary text-dark border border-4">
+      <% else %>
+        <div class="p-3 mb-2 bg-white text-dark border border-4">
       <% end %>
-    </div>
+          
+          <figcaption class="block-footer">
+            <strong>Price:</strong>
+            <%= order.reward_snapshot.price %>
+          </figcaption>
+
+          <h2 class="display-6 text-center">
+            <%= order.reward_snapshot.title %>
+          </h2>
+
+          <div class="lead text-break text-center mb-3">
+            <em><%= order.reward_snapshot.description %></em>
+          </div>
+
+          <figcaption class="block-footer text-end">
+            <strong>Bought:</strong>
+            <%= order.created_at.strftime('%d-%m-%Y %H:%M') %>
+          </figcaption>
+          <%= button_to 'Deliver', admin_users_order_path(order), method: :patch, data: { confirm: 'Are you sure? It cannot be undone later.' }, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  <%= link_to 'Back to Employees', admin_users_employees_path, class:'btn btn-outline-dark mt-3' %> 
   </div>
 </div>
-<%= link_to 'Back to Employees', admin_users_employees_path, class:'btn btn-outline-dark mt-3' %> 
+
