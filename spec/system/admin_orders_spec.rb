@@ -3,8 +3,6 @@ require 'factory_bot_rails'
 
 RSpec.describe 'Admin orders listing', type: :system do
   let(:admin_user) { create(:admin_user) }
-  let!(:order1) { create(:order) }
-  let!(:order2) { create(:order) }
 
   before do
     driven_by(:rack_test)
@@ -12,6 +10,9 @@ RSpec.describe 'Admin orders listing', type: :system do
   end
 
   context 'when listing all rewards bought by one employee' do
+    let!(:order1) { create(:order) }
+    let!(:order2) { create(:order) }
+
     it 'shows all rewards bought by employee' do
       visit admin_users_employees_path
 
@@ -38,6 +39,35 @@ RSpec.describe 'Admin orders listing', type: :system do
       expect(page).not_to have_content order1.reward.title
       expect(page).not_to have_content order1.reward.description
       expect(order2.employee.rewards).not_to include order1.reward
+    end
+  end
+
+  context 'when delivering an order to employee' do
+    let!(:order) { create(:order) }
+
+    it 'shows the number of not delivered orders' do
+      visit admin_users_employees_path
+
+      within('li', text: 'Orders') do
+        expect(page).to have_content order.employee.orders.where(status: :not_delivered).count
+      end
+    end
+
+    it 'possible to deliver an order only once' do
+      visit admin_users_employees_path
+
+      click_link 'Order'
+      expect(order.status).to eq 'not_delivered'
+
+      # TESTING IF ORDER CAN BE DELIVERED
+      click_button 'Deliver'
+      expect(page).to have_content 'The order has been delivered successfully!'
+      order.reload
+      expect(order.status).to eq 'delivered'
+
+      # TESTING IF ORDER CAN BE DELIVERED MORE THAN ONE TIME
+      click_button 'Deliver'
+      expect(page).to have_content 'The order has already been delivered.'
     end
   end
 end
