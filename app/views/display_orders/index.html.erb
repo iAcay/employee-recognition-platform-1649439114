@@ -4,6 +4,14 @@
 
 <div class='card-body'>
   <div class="container col-10">
+    <div class="text-center">
+      <%= form_for :filter, url: display_orders_path, method: :get do |f| %>
+        <% ['All rewards', 'Delivered rewards', 'Undelivered rewards'].each do |filter_value| %>
+          <%= f.button filter_value, name: :filter, value: filter_value, class: 'btn btn-outline-secondary btn-sm' %>
+        <% end %>
+      <% end %>
+    </div>
+
     <% orders.each do |order| %>
       <div class="field form-group mt-3">
         <div class="shadow p-3 mb-2 text-dark border border-4">
