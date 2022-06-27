@@ -29,7 +29,7 @@ RSpec.describe 'Orders', type: :system do
       Capybara.using_session(:employee) do
         sign_in order.employee
 
-        visit orders_path
+        visit display_orders_path
         expect(page).to have_content order.reward.price
         expect(order.reward.price).to eq price
       end

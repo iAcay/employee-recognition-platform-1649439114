@@ -1,12 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_employee!
 
-  def index
-    render :index, locals: { orders: Order.where(employee: current_employee)
-                                          .paginate(page: params[:page], per_page: 5)
-                                          .order(created_at: :desc) }
-  end
-
   def new
     @reward = Reward.find(params[:reward])
     if current_employee.earned_points < @reward.price
