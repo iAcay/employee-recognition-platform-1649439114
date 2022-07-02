@@ -72,15 +72,15 @@ RSpec.describe 'Orders', type: :system do
       expect(order.status).to eq 'not_delivered'
       expect(order2.status).to eq 'delivered'
 
-      click_button 'Delivered rewards'
+      click_link 'Delivered rewards'
       expect(page).not_to have_content order.reward.title
       expect(page).to have_content order2.reward.title
 
-      click_button 'Undelivered rewards'
+      click_link 'Undelivered rewards'
       expect(page).to have_content order.reward.title
       expect(page).not_to have_content order2.reward.title
 
-      click_button 'All rewards'
+      click_link 'All rewards'
       expect(page).to have_content order.reward.title
       expect(page).to have_content order2.reward.title
     end

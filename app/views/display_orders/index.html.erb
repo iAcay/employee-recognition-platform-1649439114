@@ -5,11 +5,9 @@
 <div class='card-body'>
   <div class="container col-10">
     <div class="text-center">
-      <%= form_for :filter, url: display_orders_path, method: :get do |f| %>
-        <% ['All rewards', 'Delivered rewards', 'Undelivered rewards'].each do |filter_value| %>
-          <%= f.button filter_value, name: :filter, value: filter_value, class: 'btn btn-outline-secondary btn-sm' %>
-        <% end %>
-      <% end %>
+      <%= link_to 'All rewards', display_orders_path, class: 'btn btn-outline-secondary btn-sm' %>
+      <%= link_to 'Delivered rewards', display_orders_path(filter: :delivered), class: 'btn btn-outline-secondary btn-sm' %>
+      <%= link_to 'Undelivered rewards', display_orders_path(filter: :not_delivered), class: 'btn btn-outline-secondary btn-sm' %>
     </div>
 
     <% orders.each do |order| %>
