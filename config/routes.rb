@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   resources :kudos
   resources :rewards, only: %i[index show] do
     collection do
-      resources :orders, only: %i[index new create]
+      resources :orders, only: %i[new create]
+      resources :display_orders, only: %i[index]
     end
   end
   
