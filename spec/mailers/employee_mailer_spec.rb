@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe EmployeeMailer, type: :mailer do
   describe 'delivery confirmation email sending' do
     let(:order) { create(:order) }
-    let(:email) { described_class.send_delivery_confirmation_email(order) }
+    let(:email) { described_class.delivery_confirmation_email(order) }
 
     it 'renders the headers' do
       expect(email.subject).to eq 'Reward has been delivered!'
