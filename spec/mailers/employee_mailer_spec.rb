@@ -8,7 +8,7 @@ RSpec.describe EmployeeMailer, type: :mailer do
     it 'renders the headers' do
       expect(email.subject).to eq 'Reward has been delivered!'
       expect(email.to).to eq [order.employee.email]
-      expect(email.from).to eq ['sz.nedzynski@gmail.com']
+      expect(email.from).to eq [Rails.application.credentials.dig(:sendgrid, :sender_email)]
     end
 
     it 'renders the body' do
