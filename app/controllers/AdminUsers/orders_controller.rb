@@ -5,12 +5,16 @@ module AdminUsers
     end
 
     def update
-      if order.status_not_delivered?
-        order.status_delivered!
+      if order.status_delivered?
+        redirect_back fallback_location: admin_users_employees_path,
+                      notice: 'The order has already been delivered.'
+      elsif order.update(status: :delivered)
+        EmployeeMailer.delivery_confirmation_email(order).deliver_now
         redirect_back fallback_location: admin_users_employees_path,
                       notice: 'The order has been delivered successfully!'
       else
-        redirect_back fallback_location: admin_users_employees_path, notice: 'The order has already been delivered.'
+        redirect_back fallback_location: admin_users_employees_path,
+                      notice: 'The order has not been delivered :('
       end
     end
 
