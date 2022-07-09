@@ -13,7 +13,7 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
   context 'when creating a new reward' do
     before do
       visit '/admin/pages/dashboard'
-      click_link 'Go to Rewards Admin Panel'
+      click_link 'Manage Rewards'
       click_link 'New Reward'
     end
 
@@ -73,7 +73,7 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
 
     it 'enables to edit a reward' do
       visit '/admin/pages/dashboard'
-      click_link 'Go to Rewards Admin Panel'
+      click_link 'Manage Rewards'
 
       click_link 'Edit'
       fill_in 'Title', with: 'New Title of Reward'
@@ -96,7 +96,7 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
       expect(Reward.count).to eq 1
 
       visit '/admin/pages/dashboard'
-      click_link 'Go to Rewards Admin Panel'
+      click_link 'Manage Rewards'
 
       click_link 'Destroy'
 

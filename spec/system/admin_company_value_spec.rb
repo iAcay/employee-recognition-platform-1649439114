@@ -43,7 +43,7 @@ RSpec.describe 'Admin Company Values CRUD', type: :system do
 
     def go_to_form_new_company_value
       visit '/admin/pages/dashboard'
-      click_link 'Go to Company Values Admin Panel'
+      click_link 'Manage Company Values'
       click_link 'New Company Value'
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe 'Admin Company Values CRUD', type: :system do
   context 'when editing company value' do
     it 'enables to edit a company value' do
       visit '/admin/pages/dashboard'
-      click_link 'Go to Company Values Admin Panel'
+      click_link 'Manage Company Values'
 
       expect(page).to have_content company_value.title
       expect(company_value.title).to eq 'Company Value Title'
@@ -93,7 +93,7 @@ RSpec.describe 'Admin Company Values CRUD', type: :system do
       expect(CompanyValue.count).to eq 1
 
       visit '/admin/pages/dashboard'
-      click_link 'Go to Company Values Admin Panel'
+      click_link 'Manage Company Values'
 
       click_link 'Destroy'
 

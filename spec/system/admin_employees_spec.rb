@@ -15,7 +15,7 @@ RSpec.describe 'Modifying employees', type: :system do
       expect(Employee.count).to eq 1
 
       visit '/admin/pages/dashboard'
-      click_link 'Go to Employees Admin Panel'
+      click_link 'Manage Employees'
 
       expect(page).to have_content employee.email
       expect(page).to have_content employee.number_of_available_kudos

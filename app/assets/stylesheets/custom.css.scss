@@ -1,0 +1,29 @@
+@import 'bootstrap/dist/css/bootstrap';
+
+html,
+body {
+  height: 100%;
+}
+
+#page-content {
+  flex: 1 0 auto;
+}
+
+#admin-dashboard-container {
+  margin-top: 60px;
+}
+
+#admin-dashboard {
+  background-color: black;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 475px;
+  border-radius: 20px;
+  box-shadow: 4px 4px;
+}
+
+#admin_dashboard_logo {
+  letter-spacing: -2px;
+  font-weight: bold;
+}

@@ -13,7 +13,7 @@ RSpec.describe 'Listing and deleting kudos by admin', type: :system do
   context 'when list all kudos' do
     it 'enables to list' do
       visit '/admin/pages/dashboard'
-      click_link 'Go to Kudos Admin Panel'
+      click_link 'Manage Kudos'
 
       expect(page).to have_content kudo.title
       expect(page).to have_content kudo.content

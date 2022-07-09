@@ -1,28 +1,31 @@
-<h1 class="text-center">Admin dashboard &#128508;</h1>
-</p>
-<table class="table table-dark">
-  <thead>
-    <tr class="text-center">
-        <th colspan="2"><h4>Directions</h4></th>
-      </tr>
-  </thead>
-
-  <tbody>
-    <tr class="table-active text-center">
-     <td><h5>Manage Kudos List</h5></td>
-     <td><%= link_to 'Go to Kudos Admin Panel', admin_users_kudos_path, class:'btn btn-outline-light' %>
-    </tr>
-    <tr class="table-active text-center">
-     <td><h5>Manage Employees List</h5></td>
-     <td><%= link_to 'Go to Employees Admin Panel', admin_users_employees_path, class:'btn btn-outline-light' %>
-    </tr>
-    <tr class="table-active text-center">
-      <td><h5>Manage Company Values</h5></td>
-      <td><%= link_to 'Go to Company Values Admin Panel', admin_users_company_values_path, class:'btn btn-outline-light' %></td>
-    </tr>
-    <tr class="table-active text-center">
-      <td><h5>Manage Rewards</h5></td>
-      <td><%= link_to 'Go to Rewards Admin Panel', admin_users_rewards_path, class:'btn btn-outline-light' %></td>
-     </tr>
-  </tbody>
-</table>
+<div class="container" id="admin-dashboard-container">
+  <div id="admin-dashboard">
+    <hr class="border-3 border-top border-light mt-3">
+    <p class="display-4 text-center text-white" id='admin_dashboard_logo'>Admin dashboard &#128508;</p>
+    <hr class="border-3 border-top border-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-5">
+        <div class="col">
+          <div class="card bg-dark">
+              <%= link_to 'Manage Kudos', admin_users_kudos_path, class:'btn btn-outline-light btn-lg' %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+              <%= link_to 'Manage Employees', admin_users_employees_path, class:'btn btn-outline-light btn-lg' %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+              <%= link_to 'Manage Company Values', admin_users_company_values_path, class:'btn btn-outline-light btn-lg' %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+              <%= link_to 'Manage Rewards', admin_users_rewards_path, class:'btn btn-outline-light btn-lg' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
