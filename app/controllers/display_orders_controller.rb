@@ -2,7 +2,7 @@ class DisplayOrdersController < ApplicationController
   before_action :authenticate_employee!
 
   def index
-    if params[:filter]
+    if %w[delivered not_delivered].include?(params[:filter])
       render :index, locals: { orders: Order.where(employee: current_employee)
                                             .filter_by_status(params[:filter])
                                             .paginate(page: params[:page], per_page: 5)
