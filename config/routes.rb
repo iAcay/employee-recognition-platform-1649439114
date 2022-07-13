@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       collection do
         resources :orders, only: %i[index update]
         get 'edit_number_of_available_kudos_for_all'
-        patch 'update_number_of_available_kudos_for_all'
+        patch 'add_available_kudos_for_all'
       end
     end
     resources :company_values, except: %i[show]
