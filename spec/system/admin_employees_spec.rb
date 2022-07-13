@@ -2,8 +2,10 @@ require 'rails_helper'
 require 'factory_bot_rails'
 
 RSpec.describe 'Modifying employees', type: :system do
+  let(:first_number_of_kudos) { 7 }
+  let(:second_number_of_kudos) { 10 }
   let(:admin_user) { create(:admin_user) }
-  let!(:employee) { create(:employee) }
+  let!(:employee) { create(:employee, number_of_available_kudos: first_number_of_kudos) }
 
   before do
     driven_by(:rack_test)
@@ -36,7 +38,7 @@ RSpec.describe 'Modifying employees', type: :system do
 
       fill_in 'Email', with: 'changed@mail.com'
       fill_in 'Password', with: 'password1'
-      fill_in 'Number of kudos', with: 7
+      fill_in 'Number of kudos', with: second_number_of_kudos
 
       click_button 'Update'
 
@@ -45,7 +47,7 @@ RSpec.describe 'Modifying employees', type: :system do
       expect(page).to have_content 'Employee was successfully updated.'
       expect(employee.email).to eq 'changed@mail.com'
       expect(employee.valid_password?('password1')).to be true
-      expect(employee.number_of_available_kudos).to eq 7
+      expect(employee.number_of_available_kudos).to eq second_number_of_kudos
     end
 
     it 'enables to update without changing password' do
@@ -53,7 +55,7 @@ RSpec.describe 'Modifying employees', type: :system do
       click_link 'Edit'
 
       fill_in 'Email', with: 'changed@mail.com'
-      fill_in 'Number of kudos', with: 7
+      fill_in 'Number of kudos', with: second_number_of_kudos
 
       click_button 'Update'
 
@@ -61,7 +63,7 @@ RSpec.describe 'Modifying employees', type: :system do
 
       expect(page).to have_content 'Employee was successfully updated.'
       expect(employee.email).to eq 'changed@mail.com'
-      expect(employee.number_of_available_kudos).to eq 7
+      expect(employee.number_of_available_kudos).to eq second_number_of_kudos
     end
 
     it 'checks validation' do
@@ -87,6 +89,28 @@ RSpec.describe 'Modifying employees', type: :system do
 
       expect(page).to have_content 'Employee was successfully destroyed.'
       expect(Employee.count).to eq 0
+    end
+  end
+
+  context 'when incrementing number of available kudos for all employees' do
+    let!(:employee1) { create(:employee, number_of_available_kudos: first_number_of_kudos) }
+
+    it 'increments number of available kudos for all employees' do
+      expect(employee.number_of_available_kudos).to eq first_number_of_kudos
+      expect(employee1.number_of_available_kudos).to eq first_number_of_kudos
+
+      visit '/admin/pages/dashboard'
+      click_link 'Add Kudos'
+
+      fill_in 'Number of kudos', with: second_number_of_kudos
+      click_button 'Add Kudos'
+
+      expect(page).to have_content "Each employee received #{second_number_of_kudos} additional kudos for use."
+
+      employee.reload
+      employee1.reload
+      expect(employee.number_of_available_kudos).to eq(first_number_of_kudos + second_number_of_kudos)
+      expect(employee1.number_of_available_kudos).to eq(first_number_of_kudos + second_number_of_kudos)
     end
   end
 end
