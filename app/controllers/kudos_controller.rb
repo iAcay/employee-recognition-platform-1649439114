@@ -35,6 +35,7 @@ class KudosController < ApplicationController
   def update
     if params[:receiver_id] != kudo.receiver.id
       previous_receiver = kudo.receiver
+      authorize kudo
       if kudo.update(kudo_params)
         kudo.receiver.increment(:earned_points).save
         previous_receiver.decrement(:earned_points).save
@@ -51,7 +52,7 @@ class KudosController < ApplicationController
 
   def destroy
     previous_receiver = kudo.receiver
-
+    authorize kudo
     return unless kudo.destroy
 
     current_employee.increment(:number_of_available_kudos).save
@@ -79,5 +80,9 @@ class KudosController < ApplicationController
     return if current_employee.number_of_available_kudos.positive?
 
     redirect_to kudos_path, notice: 'You cannot add more kudos.'
+  end
+
+  def pundit_user
+    current_employee
   end
 end
