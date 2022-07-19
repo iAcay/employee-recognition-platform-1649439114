@@ -26,7 +26,11 @@
   </p>
 
   <% if kudo.giver == current_employee %>
-    <%= link_to 'Edit', edit_kudo_path(kudo), class:"btn btn-dark" %>
+   <% if policy(kudo).update? %>
+      <%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-dark' %>
+    <% else %>
+      <%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-dark disabled', aria: { hidden: true } %>
+    <% end %>
   <% end %>
   <%= link_to 'Back', kudos_path, class:"btn btn-dark"%>
 </div>
