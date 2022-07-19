@@ -33,9 +33,9 @@ class KudosController < ApplicationController
   end
 
   def update
+    authorize kudo
     if params[:receiver_id] != kudo.receiver.id
       previous_receiver = kudo.receiver
-      authorize kudo
       if kudo.update(kudo_params)
         kudo.receiver.increment(:earned_points).save
         previous_receiver.decrement(:earned_points).save
