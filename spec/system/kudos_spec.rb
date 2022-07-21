@@ -146,23 +146,20 @@ RSpec.describe 'Working on kudos', type: :system do
     it 'enables to delete a kudo within 5 minutes after it was sent' do
       expect(Kudo.count).to eq 1
       visit root_path
-      click_link 'Destroy'
+      click_button 'Destroy'
 
       expect(page).to have_content 'Kudo was successfully destroyed.'
       expect(Kudo.count).to eq 0
     end
 
-    it 'disallow to remove a kudo 5 minutes after it was sent' do
-      expect(Kudo.count).to eq 1
+    it 'makes destroy button disabled 5 minutes after kudo was sent' do
       visit root_path
+      expect(page).to have_button('Destroy', disabled: false)
 
       travel 6.minutes
-
       visit root_path
-      click_link 'Destroy'
 
-      expect(page).not_to have_content 'Kudo was successfully destroyed.'
-      expect(Kudo.count).to eq 1
+      expect(page).to have_button('Destroy', disabled: true)
     end
 
     it 'decreases the number of earned points after deleting kudo' do
@@ -171,7 +168,7 @@ RSpec.describe 'Working on kudos', type: :system do
 
       # Delete kudo
       visit root_path
-      click_link 'Destroy'
+      click_button 'Destroy'
 
       receiver.reload
       expect(receiver.earned_points).to eq 0

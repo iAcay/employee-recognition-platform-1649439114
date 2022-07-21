@@ -24,10 +24,10 @@
             <% if kudo.giver == current_employee %>
               <% if policy(kudo).update? && policy(kudo).destroy? %>
                 <td><%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-outline-primary' %></td>
-                <td><%= link_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
+                <td><%= button_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
               <% else %>
                 <td><%= link_to 'Edit', edit_kudo_path(kudo), class:'btn btn-outline-primary disabled', aria: { hidden: true } %></td>
-                <td><%= link_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger disabled', aria: { hidden: true } %></td>
+                <td><%= button_to 'Destroy', kudo, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger', disabled: true, aria: { hidden: true } %></td>
               <% end %>
             <% else %>
               <td><%= link_to 'Unauthorized', kudos_path, class:'btn btn-outline-warning' %></td>
