@@ -81,8 +81,4 @@ class KudosController < ApplicationController
 
     redirect_to kudos_path, notice: 'You cannot add more kudos.'
   end
-
-  def pundit_user
-    current_employee
-  end
 end

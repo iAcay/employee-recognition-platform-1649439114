@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
     redirect_back fallback_location: root_path,
                   alert: "It's too late. You can working on kudo only for 5 minutes after it was sent."
   end
+
+  def pundit_user
+    current_employee
+  end
 end
