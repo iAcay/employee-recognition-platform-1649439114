@@ -152,7 +152,7 @@ RSpec.describe 'Working on kudos', type: :system do
       expect(Kudo.count).to eq 0
     end
 
-    it 'not being able to remove a kudo 5 minutes after it was sent' do
+    it 'disallow to remove a kudo 5 minutes after it was sent' do
       expect(Kudo.count).to eq 1
       visit root_path
 
