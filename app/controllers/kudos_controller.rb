@@ -33,6 +33,7 @@ class KudosController < ApplicationController
   end
 
   def update
+    authorize kudo
     if params[:receiver_id] != kudo.receiver.id
       previous_receiver = kudo.receiver
       if kudo.update(kudo_params)
@@ -51,7 +52,7 @@ class KudosController < ApplicationController
 
   def destroy
     previous_receiver = kudo.receiver
-
+    authorize kudo
     return unless kudo.destroy
 
     current_employee.increment(:number_of_available_kudos).save
