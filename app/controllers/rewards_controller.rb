@@ -2,7 +2,8 @@ class RewardsController < ApplicationController
   before_action :authenticate_employee!
 
   def index
-    render :index, locals: { rewards: Reward.order(title: :asc) }
+    render :index, locals: { rewards: Reward.order(created_at: :asc)
+                                            .paginate(page: params[:page], per_page: 3) }
   end
 
   def show
