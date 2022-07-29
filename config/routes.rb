@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
     resources :company_values, except: %i[show]
     resources :rewards
+    resources :categories, except: %i[show]
     resources :pages, only: [] do
       collection do
         get :dashboard

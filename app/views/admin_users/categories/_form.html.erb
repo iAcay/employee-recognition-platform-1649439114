@@ -1,0 +1,18 @@
+<div class="card-body">
+  <%= form_with(model: [:admin_users, category]) do |form| %>
+    <div class="form-group mt-3">
+      <% category.errors.each do |error| %>
+        <li><strong><%= error.full_message %></strong></li>
+      <% end %>
+    </div>
+
+    <div class="field form-group mt-3">
+      <%= form.text_field :title, autofocus: true, autocomplete: "title", class:"form-control", placeholder:"Title" %>
+    </div>
+      
+    <div class="actions mt-3">
+      <%= form.submit(category.new_record? ? "Create" : "Update", class: "btn btn-dark") %>
+    </div>
+  <% end %>
+  <%= link_to "Back", admin_users_categories_path, class: 'btn btn-outline-secondary mt-3' %>
+</div>

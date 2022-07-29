@@ -21,8 +21,13 @@
       <%= form.number_field :price, autofocus: true, class:"form-control", placeholder:"Price" %>
     </div>
 
+    <div class="field form-group mt-3">
+      <%= form.label :category_id %>
+      <%= form.collection_select :category_id, Category.order(title: :asc), :id, :title, prompt: true, include_blank: 'Without category' %>
+    </div>
+
     <div class="actions mt-3">
-      <%= form.submit(reward.new_record? ? "Create" : "Update", class: "btn btn-dark")%>
+      <%= form.submit(reward.new_record? ? "Create" : "Update", class: "btn btn-dark") %>
     </div>
   <% end %>
 
