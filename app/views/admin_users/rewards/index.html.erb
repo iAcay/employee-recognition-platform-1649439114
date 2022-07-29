@@ -17,7 +17,7 @@
           <td><%= reward.title %></td>
           <td><%= truncate(reward.description, length: 50) %></td>
           <td><%= reward.price %></td>
-          <td><%= reward.category.title if reward.category.present? %></td>
+          <td><%= reward.category? %></td>
           <td><%= link_to 'Show', admin_users_reward_path(reward), class: 'btn btn-outline-primary' %></td>
           <td><%= link_to 'Edit', edit_admin_users_reward_path(reward), class: 'btn btn-outline-primary' %></td>
           <td><%= link_to 'Destroy', admin_users_reward_path(reward), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>

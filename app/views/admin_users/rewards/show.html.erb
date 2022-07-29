@@ -4,7 +4,7 @@
       <div class="row">
       <div class="col-6 text-start">
         <strong>Category:</strong>
-        <%= reward.category.present? ? reward.category.title : 'without category' %>
+        <%= reward.category? %>
         </div>
         <div class="col-6 text-end">
         <strong>Price:</strong>
