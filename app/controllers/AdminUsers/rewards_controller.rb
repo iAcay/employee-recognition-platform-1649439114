@@ -1,7 +1,7 @@
 module AdminUsers
   class RewardsController < BaseController
     def index
-      render :index, locals: { rewards: Reward.order(title: :asc) }
+      render :index, locals: { rewards: Reward.order(title: :asc).includes([:category]) }
     end
 
     def show
@@ -45,7 +45,7 @@ module AdminUsers
     end
 
     def reward_params
-      params.require(:reward).permit(:title, :description, :price)
+      params.require(:reward).permit(:title, :description, :price, :category_id)
     end
   end
 end
