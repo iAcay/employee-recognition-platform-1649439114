@@ -3,6 +3,7 @@ class RewardsController < ApplicationController
 
   def index
     render :index, locals: { rewards: Reward.order(created_at: :asc)
+                                            .includes([:category])
                                             .paginate(page: params[:page], per_page: 3) }
   end
 

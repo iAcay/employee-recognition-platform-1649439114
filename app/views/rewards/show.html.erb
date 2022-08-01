@@ -1,8 +1,16 @@
-<div class="shadow p-3 mb-5 bg-body rounded">
+<div class="shadow p-3 mb-5 mt-3 bg-body rounded">
   <figure class="text-end">
     <figcaption class="block-footer">
-      <strong>Price:</strong>
-      <%= reward.price %>
+      <div class="row">
+        <div class="col-6 text-start">
+          <strong>Category:</strong>
+          <%= reward.category? %>
+        </div>
+        <div class="col-6 text-end">
+          <strong>Price:</strong>
+          <%= reward.price %>
+        </div>
+      </div>
     </figcaption>
   </figure>
 
