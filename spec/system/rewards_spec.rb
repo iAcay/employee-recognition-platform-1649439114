@@ -68,6 +68,46 @@ RSpec.describe 'Working on rewards', type: :system do
     end
   end
 
+  context 'when filtering rewards by categories' do
+    let(:category) { create(:category) }
+    let!(:reward2) { create(:reward, category: category) }
+
+    it 'shows links to filter by each category' do
+      visit root_path
+      click_link 'Rewards'
+
+      expect(page).to have_link 'All'
+      expect(page).to have_link category.title
+    end
+
+    it 'filters rewards by their categories' do
+      visit root_path
+      click_link 'Rewards'
+
+      expect(page).to have_content reward.title
+      expect(page).to have_content reward2.title
+      expect(reward.category).to eq nil
+      expect(reward2.category).to eq category
+
+      # Testing if filter by category works
+      click_link category.title
+      expect(page).to have_content reward2.title
+      expect(page).not_to have_content reward.title
+
+      # Testing if link to all rewards works
+      click_link 'All'
+      expect(page).to have_content reward.title
+      expect(page).to have_content reward2.title
+    end
+
+    it 'shows all rewards when params[:category] have invalid value' do
+      visit rewards_path(category: 'invalid')
+
+      expect(page).to have_content reward.title
+      expect(page).to have_content reward2.title
+    end
+  end
+
   context 'when showing a particular reward' do
     it 'enables to show a specific reward with all of its details' do
       visit '/rewards'
