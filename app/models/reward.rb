@@ -8,7 +8,7 @@ class Reward < ApplicationRecord
 
   scope :by_category, ->(category) { where(category: category) if Category.exists?(id: category) }
 
-  def category?
+  def display_category
     category.present? ? category.title : 'without category'
   end
 end
