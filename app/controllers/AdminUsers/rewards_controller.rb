@@ -1,7 +1,7 @@
 module AdminUsers
   class RewardsController < BaseController
     def index
-      render :index, locals: { rewards: Reward.order(title: :asc).includes([:category, [photo_attachment: :blob]]) }
+      render :index, locals: { rewards: Reward.order(title: :asc).with_attached_photo.includes([:category]) }
     end
 
     def show

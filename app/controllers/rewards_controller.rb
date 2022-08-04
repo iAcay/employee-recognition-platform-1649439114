@@ -4,7 +4,8 @@ class RewardsController < ApplicationController
   def index
     render :index, locals: { categories: Category.order(title: :asc),
                              rewards: Reward.order(created_at: :asc)
-                                            .includes([:category, [:photo_attachment]])
+                                            .includes([:category])
+                                            .with_attached_photo
                                             .by_category(params[:category])
                                             .paginate(page: params[:page], per_page: 3) }
   end
