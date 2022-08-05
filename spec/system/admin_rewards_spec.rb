@@ -89,6 +89,22 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
     end
   end
 
+  context 'when adding photo to reward' do
+    it 'enables to add photo to reward' do
+      reward = create(:reward)
+
+      visit '/admin/pages/dashboard'
+      click_link 'Manage Rewards'
+
+      click_link 'Edit'
+      attach_file 'Photo', './app/assets/images/test.jpeg'
+      click_button 'Update'
+
+      reward.reload
+      expect(reward.photo).to be_attached
+    end
+  end
+
   context 'when deleting reward' do
     let!(:reward) { create(:reward) }
 

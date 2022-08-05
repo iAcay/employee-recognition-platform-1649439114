@@ -33,10 +33,16 @@
               </div>
             </div>
           </figcaption>
-
-          <h2 class="display-6 text-center">
-            <%= reward.title %>
-          </h2>
+          <div class="row mt-2">
+            <div class="col-4 text-start">
+              <%= image_tag reward.photo, size: '100x100', class: 'rounded' if reward.photo.attached? %>
+            </div>
+            <div class="col-8 text-center">
+              <h2 class="display-6 text-start">
+                <%= reward.title %>
+              </h2>
+            </div>
+          </div>
 
           <figcaption class="block-footer text-end">
             <%= link_to 'Show', reward_path(reward), class: 'btn btn-outline-primary' %>

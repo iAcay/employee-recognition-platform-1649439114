@@ -8,6 +8,9 @@ class Reward < ApplicationRecord
 
   scope :by_category, ->(category) { where(category: category) if Category.exists?(id: category) }
 
+  has_one_attached :photo
+  validates :photo, content_type: %i[jpg png]
+
   def display_category
     category.present? ? category.title : 'without category'
   end

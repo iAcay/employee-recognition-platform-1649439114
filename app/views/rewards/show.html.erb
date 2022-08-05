@@ -1,26 +1,34 @@
-<div class="shadow p-3 mb-5 mt-3 bg-body rounded">
-  <figure class="text-end">
-    <figcaption class="block-footer">
-      <div class="row">
-        <div class="col-6 text-start">
-          <strong>Category:</strong>
-          <%= reward.display_category %>
+<div class="container-fluid col-10">
+  <div class="shadow p-3 mb-5 mt-5 bg-body rounded">
+    <figure class="text-end">
+      <figcaption class="block-footer">
+        <div class="row">
+          <div class="col-6 text-start">
+            <strong>Category:</strong>
+            <%= reward.display_category %>
+          </div>
+          <div class="col-6 text-end">
+            <strong>Price:</strong>
+            <%= reward.price %>
+          </div>
         </div>
-        <div class="col-6 text-end">
-          <strong>Price:</strong>
-          <%= reward.price %>
+      </figcaption>
+    </figure>
+
+    <div class="row">
+      <div class="col-6 text-start">
+        <h2 class="display-6">
+          <%= reward.title %>
+        </h2>
+        <div class="lead text-break" style="width: 80rem;">
+          <em><%= reward.description %></em>
         </div>
       </div>
-    </figcaption>
-  </figure>
+      <div class="col-6 text-end">
+        <%= image_tag reward.photo, size: '200x200', class: 'rounded' if reward.photo.attached? %>
+      </div>
+    </div>
 
-  <h2 class="display-6">
-    <%= reward.title %>
-  </h2>
-
-  <div class="lead text-break" style="width: 80rem;">
-    <em><%= reward.description %></em>
+    <%= link_to 'Back to Rewards', rewards_path, class:"btn btn-dark mt-3" %>
   </div>
-
-  <%= link_to 'Back to Rewards', rewards_path, class:"btn btn-dark mt-3" %>
 </div>
