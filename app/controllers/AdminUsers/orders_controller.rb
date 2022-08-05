@@ -1,3 +1,5 @@
+require 'csv'
+
 module AdminUsers
   class OrdersController < BaseController
     def index
@@ -16,6 +18,14 @@ module AdminUsers
         redirect_back fallback_location: admin_users_employees_path,
                       notice: 'The order has not been delivered :('
       end
+    end
+
+    def export_to_csv
+      @orders = Order.includes([:employee]).order(created_at: :desc)
+
+      response.headers['Content-Type'] = 'text/csv'
+      response.headers['Content-Disposition'] = "attachment; filename=#{Time.zone.now.to_s(:number)}_orders.csv"
+      render template: 'admin_users/orders/orders', formats: [:csv], handlers: [:erb]
     end
 
     private

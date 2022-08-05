@@ -1,0 +1,11 @@
+<%- headers = %w[ordered_on updated_at email title description price delivery_status] -%>
+<%= CSV.generate_line headers -%>
+<%- @orders.each do |order| -%>
+  <%= CSV.generate_line([order.created_at.to_formatted_s(:db),
+                         order.updated_at.to_formatted_s(:db),
+                         order.employee.email,
+                         order.reward_snapshot.title,
+                         order.reward_snapshot.description,
+                         order.reward_snapshot.price,
+                         order.status]) -%>
+<%- end -%>
