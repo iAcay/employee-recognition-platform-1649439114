@@ -22,7 +22,11 @@ Rails.application.routes.draw do
     resources :kudos, only: %i[index destroy]
     resources :employees, only: %i[index edit update destroy] do
       collection do
-        resources :orders, only: %i[index update]
+        resources :orders, only: %i[index update] do
+          collection do
+            get 'export_to_csv'
+          end
+        end
         get 'edit_number_of_available_kudos_for_all'
         patch 'add_available_kudos_for_all'
       end
