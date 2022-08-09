@@ -16,7 +16,7 @@ RSpec.describe 'All orders to CSV format', type: :system do
       visit dashboard_admin_users_pages_path
       click_link 'Manage Employees'
 
-      click_link 'All orders to CSV'
+      click_link 'Export all orders to CSV'
       csv = CSV.parse(page.body)
 
       expected_headers = %w[ordered_on updated_at email title description price delivery_status]
