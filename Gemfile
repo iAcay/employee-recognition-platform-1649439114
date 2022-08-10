@@ -16,11 +16,15 @@ gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'activerecord-import'
+gem 'active_storage_validations'
+gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'net-imap'
 gem 'net-pop'
 gem 'net-smtp', require: false
+gem 'pundit', '~> 2.2'
 gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
@@ -52,7 +56,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'active_storage_validations'
-gem 'aws-sdk-s3', require: false
-gem 'pundit', '~> 2.2'

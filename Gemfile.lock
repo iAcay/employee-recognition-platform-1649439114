@@ -60,6 +60,8 @@ GEM
     activerecord (6.1.5)
       activemodel (= 6.1.5)
       activesupport (= 6.1.5)
+    activerecord-import (1.4.0)
+      activerecord (>= 4.2)
     activestorage (6.1.5)
       actionpack (= 6.1.5)
       activejob (= 6.1.5)
@@ -318,6 +320,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations
+  activerecord-import
   aws-sdk-s3
   bootsnap (>= 1.4.4)
   bullet (~> 7.0)
