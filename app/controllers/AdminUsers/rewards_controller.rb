@@ -1,3 +1,5 @@
+require 'csv'
+
 module AdminUsers
   class RewardsController < BaseController
     def index
@@ -36,6 +38,37 @@ module AdminUsers
 
     def destroy
       redirect_to admin_users_rewards_path, notice: 'Reward was successfully deleted.' if reward.destroy
+    end
+
+    def new_import_from_csv
+      render :new_import_from_csv, locals: { reward: Reward.new }
+    end
+
+    def import_from_csv
+      if params[:reward][:file].nil?
+        redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Please select a file'
+      elsif File.extname(params[:reward][:file]) != '.csv'
+        redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Only .csv files are allowed.'
+      else
+        begin
+          ActiveRecord::Base.transaction do
+            columns = %i[title description price category_id]
+            values = []
+            CSV.foreach(params[:reward][:file].path, headers: true) do |row|
+              category = Category.find_or_create_by(title: row[3].capitalize)
+              values << [row[0], row[1], row[2], category.id]
+            end
+            Reward.import! columns, values, validate: true,
+                                            on_duplicate_key_update: { conflict_target: [:title],
+                                                                       columns: %i[description price category_id] }
+          end
+        rescue ActiveRecord::RecordInvalid => e
+          redirect_to new_import_from_csv_admin_users_rewards_path,
+                      alert: "Errors in CSV file: <br> #{e.message}."
+        else
+          redirect_to admin_users_rewards_path, notice: 'Rewards was successfully imported.'
+        end
+      end
     end
 
     private
