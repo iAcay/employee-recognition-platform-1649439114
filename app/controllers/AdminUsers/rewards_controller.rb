@@ -51,17 +51,7 @@ module AdminUsers
         redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Only .csv files are allowed.'
       else
         begin
-          ActiveRecord::Base.transaction do
-            columns = %i[title description price category_id]
-            values = []
-            CSV.foreach(params[:reward][:file].path, headers: true) do |row|
-              category = Category.find_or_create_by(title: row[3].capitalize)
-              values << [row[0], row[1], row[2], category.id]
-            end
-            Reward.import! columns, values, validate: true,
-                                            on_duplicate_key_update: { conflict_target: [:title],
-                                                                       columns: %i[description price category_id] }
-          end
+          RewardsImportService.import(params[:reward][:file])
         rescue ActiveRecord::RecordInvalid => e
           redirect_to new_import_from_csv_admin_users_rewards_path,
                       alert: "Errors in CSV file: <br> #{e.message}."
