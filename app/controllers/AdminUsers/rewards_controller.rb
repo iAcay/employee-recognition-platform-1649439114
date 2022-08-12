@@ -66,7 +66,7 @@ module AdminUsers
           redirect_to new_import_from_csv_admin_users_rewards_path,
                       alert: "Errors in CSV file: <br> #{e.message}."
         else
-          redirect_to admin_users_rewards_path, notice: 'Rewards was successfully imported.'
+          redirect_to admin_users_rewards_path, notice: 'Rewards were successfully imported.'
         end
       end
     end

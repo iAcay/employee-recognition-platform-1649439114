@@ -19,7 +19,7 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       attach_file(File.absolute_path('./spec/files/test1.csv'))
       click_button 'Import Rewards'
 
-      expect(page).to have_content 'Rewards was successfully imported.'
+      expect(page).to have_content 'Rewards were successfully imported.'
       expect(Reward.count).to eq 1
       expect(Reward.first.title).to eq 'RewardTitle'
       expect(Reward.first.description).to eq 'RewardDescription'
@@ -36,7 +36,7 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       attach_file(File.absolute_path('./spec/files/test2.csv'))
       click_button 'Import Rewards'
 
-      expect(page).to have_content 'Rewards was successfully imported.'
+      expect(page).to have_content 'Rewards were successfully imported.'
       expect(Reward.count).to eq 1
       expect(Reward.first.title).to eq 'RewardTitle'
       expect(Reward.first.description).to eq 'RewardDescription2'
