@@ -1,3 +1,5 @@
+require 'csv'
+
 module AdminUsers
   class RewardsController < BaseController
     def index
@@ -36,6 +38,27 @@ module AdminUsers
 
     def destroy
       redirect_to admin_users_rewards_path, notice: 'Reward was successfully deleted.' if reward.destroy
+    end
+
+    def new_import_from_csv
+      render :new_import_from_csv, locals: { reward: Reward.new }
+    end
+
+    def import_from_csv
+      if params[:reward][:file].nil?
+        redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Please select a file'
+      elsif File.extname(params[:reward][:file]) != '.csv'
+        redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Only .csv files are allowed.'
+      else
+        begin
+          RewardsImportService.import(params[:reward][:file])
+        rescue ActiveRecord::RecordInvalid => e
+          redirect_to new_import_from_csv_admin_users_rewards_path,
+                      alert: "Errors in CSV file: <br> #{e.message}."
+        else
+          redirect_to admin_users_rewards_path, notice: 'Rewards were successfully imported.'
+        end
+      end
     end
 
     private

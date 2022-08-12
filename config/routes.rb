@@ -32,7 +32,12 @@ Rails.application.routes.draw do
       end
     end
     resources :company_values, except: %i[show]
-    resources :rewards
+    resources :rewards do
+      collection do
+        get 'new_import_from_csv'
+        post 'import_from_csv'
+      end
+    end
     resources :categories, except: %i[show]
     resources :pages, only: [] do
       collection do
