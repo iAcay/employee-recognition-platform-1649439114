@@ -1,5 +1,3 @@
-require 'csv'
-
 module AdminUsers
   class RewardsController < BaseController
     def index

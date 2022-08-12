@@ -1,3 +1,5 @@
+require 'csv'
+
 class RewardsImportService
   def initialize(data)
     @data = data
