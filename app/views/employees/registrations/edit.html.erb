@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mt-5">
   <div class="card-header">
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
   </div>
@@ -7,47 +7,41 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "employees/shared/error_messages", resource: resource %>
 
-      <div class="field form-group">
+      <div class="field form-group mt-3">
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", placeholder:"Email" %>
       </div>
-      </p>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
 
-      <div class="field form-group">
+      <div class="field form-group mt-3">
         <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder:"Password with #{@minimum_password_length} characters minimum. Leave blank if you don't want to change it." %>
       </div>
-      </p>
 
-      <div class="field form-group">
+      <div class="field form-group mt-3">
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder:"Password confirmation"%>
       </div>
-      </p>
 
-      <div class="field">
+      <div class="field mt-3">
         <%= f.password_field :current_password, autocomplete: "current-password", class:"form-control", placeholder:"Current password"%>
       </div>
-      </p>
 
-      <div class="actions">
+      <div class="actions mt-3">
         <%= f.submit "Update", class: "btn btn-dark"%>
       </div>
-      </p>
     <% end %>
+  </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h4>Cancel my account</h4>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Unhappy?</h5>
+      <p class="card-text"><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class:'btn btn-danger' %></p>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-  <div class="card-header">
-    <h4>Cancel my account</h4>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Unhappy?</h5>
-    <p class="card-text"><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class:'btn btn-danger' %></p>
-  </div>
-</div>
-</p>
-
-<%= link_to "Back", kudos_path %>
+<%= link_to "Back", kudos_path, class: 'mt-3' %>
