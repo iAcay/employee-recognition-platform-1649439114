@@ -15,4 +15,14 @@ class ApplicationController < ActionController::Base
   def pundit_user
     current_employee
   end
+
+  protected
+
+  def devise_parameter_sanitizer
+    if resource_class == Employee
+      Employees::ParameterSanitizer.new(Employee, :employee, params)
+    else
+      super
+    end
+  end
 end

@@ -3,6 +3,7 @@
     <caption class="text-center"><h1>Employees Admin Panel &#128110;</h1></caption>
     <thead class="table-dark">
       <tr class="text-center">
+        <th>Full Name</th>
         <th>Email</th>
         <th>Available kudos</th>
         <th>Actions</th>
@@ -12,6 +13,7 @@
     <tbody>
       <% employees.each do |employee| %>
         <tr class="text-center">
+          <td><%= employee.first_name + ' ' + employee.last_name %></td>
           <td><%= employee.email %></td>
           <td><%= employee.number_of_available_kudos %></td>
           <td>

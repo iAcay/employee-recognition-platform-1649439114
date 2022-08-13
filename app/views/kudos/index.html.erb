@@ -18,8 +18,8 @@
           <tr class="text-center">
             <td><%= link_to kudo.title, kudo %></td>
             <td><%= kudo.content %></td>
-            <td><%= kudo.giver.email %></td>
-            <td><%= kudo.receiver.email %></td>
+            <td><%= kudo.giver.full_name %></td>
+            <td><%= kudo.receiver.full_name %></td>
             <td><%= kudo.company_value.title %></td>
             <% if kudo.giver == current_employee %>
               <% if policy(kudo).update? && policy(kudo).destroy? %>

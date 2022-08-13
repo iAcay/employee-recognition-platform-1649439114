@@ -11,6 +11,15 @@
         <% end %>
       </div>
 
+      <div class="row">
+        <div class="col">
+          <%= form.text_field :first_name, autofocus: true, autocomplete: "first-name", class:"form-control", placeholder:"First Name" %>
+        </div>
+        <div class="col">
+          <%= form.text_field :last_name, autofocus: true, autocomplete: "last-name", class:"form-control", placeholder:"Last Name" %>
+        </div>
+      </div>
+
       <div class="field form-group mt-3">
         <%= form.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", placeholder:"Email" %>
       </div>
