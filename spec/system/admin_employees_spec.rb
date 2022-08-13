@@ -36,6 +36,8 @@ RSpec.describe 'Modifying employees', type: :system do
       visit '/admin/employees'
       click_link 'Edit'
 
+      fill_in 'First Name', with: 'ChangedFirstName'
+      fill_in 'Last Name', with: 'ChangedLastName'
       fill_in 'Email', with: 'changed@mail.com'
       fill_in 'Password', with: 'password1'
       fill_in 'Number of kudos', with: second_number_of_kudos
@@ -45,6 +47,8 @@ RSpec.describe 'Modifying employees', type: :system do
       employee.reload
 
       expect(page).to have_content 'Employee was successfully updated.'
+      expect(employee.first_name).to eq 'ChangedFirstName'
+      expect(employee.last_name).to eq 'ChangedLastName'
       expect(employee.email).to eq 'changed@mail.com'
       expect(employee.valid_password?('password1')).to be true
       expect(employee.number_of_available_kudos).to eq second_number_of_kudos
@@ -72,11 +76,15 @@ RSpec.describe 'Modifying employees', type: :system do
 
       employee2 = create(:employee)
 
+      fill_in 'First Name', with: ''
+      fill_in 'Last Name', with: ''
       fill_in 'Email', with: employee2.email
       fill_in 'Password', with: '123'
 
       click_button 'Update'
 
+      expect(page).to have_content "First name can't be blank"
+      expect(page).to have_content "Last name can't be blank"
       expect(page).to have_content 'Email has already been taken'
       expect(page).to have_content 'Password is too short (minimum is 6 characters)'
     end

@@ -6,7 +6,6 @@ RSpec.describe 'Signing', type: :system do
     driven_by(:rack_test)
   end
 
-  # SIGNING IN
   context 'when sign in and sign out' do
     let(:employee) { create(:employee) }
 
@@ -25,14 +24,17 @@ RSpec.describe 'Signing', type: :system do
     end
   end
 
-  # SIGNING UP
   context 'when sign up' do
+    let(:employee) { build(:employee) }
+
     it 'enables to sign up' do
       visit root_path
       click_link 'Sign up'
-      fill_in 'Email', with: 'signuptest@test.com'
-      fill_in 'Password', with: 'password'
-      fill_in 'Password confirmation', with: 'password'
+      fill_in 'First Name', with: employee.first_name
+      fill_in 'Last Name', with: employee.last_name
+      fill_in 'Email', with: employee.email
+      fill_in 'Password', with: employee.password
+      fill_in 'Password confirmation', with: employee.password
       click_button 'Sign up'
 
       expect(page).to have_content 'Welcome! You have signed up successfully.'
