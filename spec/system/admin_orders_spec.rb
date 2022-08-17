@@ -20,7 +20,7 @@ RSpec.describe 'Admin orders listing', type: :system do
         click_link 'Orders'
       end
 
-      expect(page).to have_content "Orders made by #{order1.employee.email}:"
+      expect(page).to have_content "Orders made by #{order1.employee.full_name}:"
       expect(page).to have_content order1.reward.title
       expect(page).to have_content order1.reward.description
       expect(page).to have_content order1.reward.price
@@ -35,7 +35,7 @@ RSpec.describe 'Admin orders listing', type: :system do
         click_link 'Orders'
       end
 
-      expect(page).to have_content "Orders made by #{order2.employee.email}:"
+      expect(page).to have_content "Orders made by #{order2.employee.full_name}:"
       expect(page).not_to have_content order1.reward.title
       expect(page).not_to have_content order1.reward.description
       expect(order2.employee.rewards).not_to include order1.reward

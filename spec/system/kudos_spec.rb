@@ -98,7 +98,7 @@ RSpec.describe 'Working on kudos', type: :system do
       # Change kudo receiver
       visit root_path
       click_link 'Edit'
-      select new_receiver.email, from: 'Receiver'
+      select new_receiver.full_name, from: 'Receiver'
       click_button 'Update Kudo'
 
       new_receiver.reload

@@ -17,8 +17,8 @@
         <tr class="text-center">
           <td><%= kudo.title %></td>
           <td><%= kudo.content %></td>
-          <td><%= kudo.giver.email %></td>
-          <td><%= kudo.receiver.email %></td>
+          <td><%= kudo.giver.full_name %></td>
+          <td><%= kudo.receiver.full_name %></td>
           <td><%= kudo.company_value.title %></td>
           <td><%= link_to 'Destroy', admin_users_kudo_path(kudo), method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger' %></td>
         </tr>

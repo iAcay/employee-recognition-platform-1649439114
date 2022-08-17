@@ -8,6 +8,13 @@ class Employee < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  validates :first_name, :last_name, presence: true
   validates :number_of_available_kudos, numericality: { greater_than_or_equal_to: 0 }
   validates :earned_points, numericality: { greater_than_or_equal_to: 0 }
+
+  def full_name
+    return email if first_name == 'No' && last_name == 'Name'
+
+    "#{first_name} #{last_name}"
+  end
 end

@@ -23,12 +23,12 @@
 
   <div class="field form-group mb-3">
     <%= form.label :receiver_id %>
-    <%= form.collection_select :receiver_id, Employee.where.not(id: current_employee.id), :id, :email%>
+    <%= form.collection_select :receiver_id, Employee.where.not(id: current_employee.id), :id, :full_name %>
   </div>
 
   <div class="field form-group mb-3">
     <%= form.label :company_value_id %>
-    <%= form.collection_select :company_value_id, CompanyValue.order('title ASC'), :id, :title, prompt: true%>
+    <%= form.collection_select :company_value_id, CompanyValue.order(title: :asc), :id, :title, prompt: true %>
   </div>
   
   <div class="actions mb-3">

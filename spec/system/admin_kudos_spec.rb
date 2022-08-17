@@ -17,8 +17,8 @@ RSpec.describe 'Listing and deleting kudos by admin', type: :system do
 
       expect(page).to have_content kudo.title
       expect(page).to have_content kudo.content
-      expect(page).to have_content kudo.giver.email
-      expect(page).to have_content kudo.receiver.email
+      expect(page).to have_content kudo.giver.full_name
+      expect(page).to have_content kudo.receiver.full_name
       expect(page).to have_content 'Destroy'
     end
 
