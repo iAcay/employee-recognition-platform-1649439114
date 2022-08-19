@@ -7,6 +7,7 @@
         <th>Description</th>
         <th>Price</th>
         <th>Category</th>
+        <th>Delivery method</th>
         <th>Photo</th>
         <th colspan="3">Actions</th>
       </tr>
@@ -19,6 +20,7 @@
           <td><%= truncate(reward.description, length: 50) %></td>
           <td><%= reward.price %></td>
           <td><%= reward.display_category %></td>
+          <td><%= reward.delivery_method.titleize %></td>
           <td><%= image_tag reward.photo, size: '50x50', class: 'rounded' if reward.photo.attached? %></td>
           <td><%= link_to 'Show', admin_users_reward_path(reward), class: 'btn btn-outline-primary' %></td>
           <td><%= link_to 'Edit', edit_admin_users_reward_path(reward), class: 'btn btn-outline-primary' %></td>

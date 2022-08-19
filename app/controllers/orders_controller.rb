@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
       redirect_to rewards_path, notice: "This reward is too expensive for you.
                                         You need #{@reward.price - current_employee.earned_points} points more."
     else
-      render :new, locals: { order: Order.new }
+      render :new, locals: { order: Order.new, order_form: which_order_form.new }
     end
   end
 
@@ -17,17 +17,12 @@ class OrdersController < ApplicationController
       redirect_to rewards_path, notice: "This reward is too expensive for you.
                                           You need #{@reward.price - current_employee.earned_points} points more."
     else
-      @order = Order.new(order_params)
-      @order.reward_snapshot = @reward
-      begin
-        ActiveRecord::Base.transaction do
-          @order.save!
-          current_employee.decrement(:earned_points, @reward.price).save!
-        end
-      rescue StandardError
-        redirect_to rewards_path, notice: 'Unfortunately something went wrong :('
-      else
+      order_form = which_order_form.new(order_form_params)
+      if order_form.save
         redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
+      else
+        render :new, locals: { order: Order.new, order_form: order_form }
+        flash[:alert] = 'Unfortunately something went wrong :('
       end
     end
   end
@@ -36,5 +31,19 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:employee_id, :reward_id, :reward_snapshot)
+  end
+
+  def address_params
+    params.require(:address).permit(:street, :postcode, :city) if params[:address]
+  end
+
+  def order_form_params
+    order_params.merge(address_params)
+  end
+
+  def which_order_form
+    return OrderPostForm if @reward.delivery_method == 'post_delivery'
+
+    OrderOnlineForm
   end
 end

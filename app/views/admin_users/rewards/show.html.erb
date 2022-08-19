@@ -3,11 +3,15 @@
     <figure class="text-end">
       <figcaption class="block-footer">
         <div class="row">
-          <div class="col-6 text-start">
+          <div class="col-4 text-start">
             <strong>Category:</strong>
             <%= reward.display_category %>
           </div>
-          <div class="col-6 text-end">
+          <div class="col-4 text-center">
+            <strong>Delivery method:</strong>
+            <%= reward.delivery_method.titleize %>
+          </div>
+          <div class="col-4 text-end">
             <strong>Price:</strong>
             <%= reward.price %>
           </div>

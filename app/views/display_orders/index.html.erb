@@ -14,11 +14,23 @@
       <div class="field form-group mt-3">
         <div class="shadow p-3 mb-2 text-dark border border-4">
           <figcaption class="block-footer">
-            <strong>Price:</strong>
-            <%= order.reward_snapshot.price %>
+            <div class="row">
+              <div class="col-4 text-start">
+                <strong>Category:</strong>
+                <%= order.reward_snapshot.display_category %>
+              </div>
+              <div class="col-4 text-center">
+                <strong>Delivery method:</strong>
+                <%= order.reward_snapshot.delivery_method %>
+              </div>
+              <div class="col-4 text-end">
+                <strong>Price:</strong>
+                <%= order.reward_snapshot.price %>
+              </div>
+            </div>
           </figcaption>
 
-          <h2 class="display-6 text-center">
+          <h2 class="display-6 text-center mt-3">
             <%= order.reward_snapshot.title %>
           </h2>
 
