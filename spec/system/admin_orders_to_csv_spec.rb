@@ -19,7 +19,7 @@ RSpec.describe 'All orders to CSV format', type: :system do
       click_link 'Export all orders to CSV'
       csv = CSV.parse(page.body)
 
-      expected_headers = %w[ordered_on updated_at email title description price delivery_status]
+      expected_headers = %w[ordered_on updated_at email title description price delivery_method delivery_status]
 
       expect(csv).to have_content(expected_headers)
       expect(csv).to have_content order1.created_at.to_formatted_s(:db)
@@ -28,6 +28,7 @@ RSpec.describe 'All orders to CSV format', type: :system do
       expect(csv).to have_content order1.reward_snapshot.title
       expect(csv).to have_content order1.reward_snapshot.description
       expect(csv).to have_content order1.reward_snapshot.price
+      expect(csv).to have_content order1.reward_snapshot.delivery_method
       expect(csv).to have_content order1.status
     end
   end

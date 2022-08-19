@@ -21,6 +21,7 @@ RSpec.describe 'Orders', type: :system do
       expect(page).to have_content order.reward.title
       expect(page).to have_content order.reward.description
       expect(page).to have_content order.reward.price
+      expect(page).to have_content order.reward.delivery_method
       expect(page).to have_content order.created_at.strftime('%d-%m-%Y %H:%M')
       expect(order.employee.rewards).to include order.reward
     end
