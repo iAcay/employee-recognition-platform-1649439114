@@ -42,8 +42,6 @@ class OrdersController < ApplicationController
   end
 
   def which_order_form
-    return OrderPostForm if @reward.delivery_method == 'post_delivery'
-
-    OrderOnlineForm
+    @reward.delivery_method_post_delivery? ? OrderPostForm : OrderOnlineForm
   end
 end
