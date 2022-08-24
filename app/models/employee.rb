@@ -3,7 +3,7 @@ class Employee < ApplicationRecord
   has_many :received_kudos, class_name: 'Kudo', foreign_key: 'receiver', inverse_of: :receiver, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :rewards, through: :orders
-  belongs_to :address, optional: true
+  has_one :address, dependent: :nullify
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

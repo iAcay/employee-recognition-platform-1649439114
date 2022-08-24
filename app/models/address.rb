@@ -1,5 +1,5 @@
 class Address < ApplicationRecord
-  has_one :employee, dependent: :nullify
+  belongs_to :employee, optional: true
 
   validates :street, :postcode, :city, presence: true
 end
