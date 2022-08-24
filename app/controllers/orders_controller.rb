@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
       redirect_to rewards_path, notice: "This reward is too expensive for you.
                                         You need #{@reward.price - current_employee.earned_points} points more."
     else
-      render :new, locals: { order: Order.new, order_form: which_order_form.new }
+      render :new, locals: { order: Order.new, order_form: OrderForm.new }
     end
   end
 
@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
       redirect_to rewards_path, notice: "This reward is too expensive for you.
                                           You need #{@reward.price - current_employee.earned_points} points more."
     else
-      order_form = which_order_form.new(order_form_params)
+      order_form = OrderForm.new(order_form_params)
       if order_form.save
         redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
       else
@@ -39,9 +39,5 @@ class OrdersController < ApplicationController
 
   def order_form_params
     order_params.merge(address_params)
-  end
-
-  def which_order_form
-    @reward.delivery_method_post_delivery? ? OrderPostForm : OrderOnlineForm
   end
 end
