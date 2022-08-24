@@ -11,11 +11,16 @@
       <% else %>
         <div class="p-3 mb-2 bg-white text-dark border border-4">
       <% end %>
-          
-          <figcaption class="block-footer">
-            <strong>Price:</strong>
-            <%= order.reward_snapshot.price %>
-          </figcaption>
+          <div class="row">
+            <div class="col-6 text-start">
+              <strong>Price:</strong>
+              <%= order.reward_snapshot.price %>
+            </div>
+            <div class="col-6 text-end">
+              <strong>Delivery method:</strong>
+              <%= order.reward_snapshot.delivery_method %>
+            </div>
+          </div>  
 
           <h2 class="display-6 text-center">
             <%= order.reward_snapshot.title %>

@@ -27,6 +27,11 @@
     </div>
 
     <div class="field form-group mt-3">
+      <%= form.label :delivery_method %>
+      <%= form.select :delivery_method, Reward.delivery_methods.keys.map { |method| method } %>
+    </div>
+
+    <div class="field form-group mt-3">
       <%= form.file_field :photo, placeholder: "Photo" %>
     </div>
 

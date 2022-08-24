@@ -11,6 +11,7 @@ class RewardsImportService
         reward = Reward.find_or_initialize_by(title: row['Title'])
         reward.description = row['Description']
         reward.price = row['Price']
+        reward.delivery_method = row['DeliveryMethod']
         reward.category = Category.find_or_create_by!(title: row['Category'])
         reward.save!
       end

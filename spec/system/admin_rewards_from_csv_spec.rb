@@ -24,18 +24,22 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       expect(Reward.first.title).to eq 'RewardTitle'
       expect(Reward.first.description).to eq 'RewardDescription'
       expect(Reward.first.price).to eq 3
+      expect(Reward.first.delivery_method).to eq 'post_delivery'
       expect(Reward.first.category.title).to eq 'Category1'
       expect(Reward.last.title).to eq 'RewardTitle2'
       expect(Reward.last.description).to eq 'RewardDescription2'
       expect(Reward.last.price).to eq 4
+      expect(Reward.last.delivery_method).to eq 'online'
       expect(Reward.last.category.title).to eq 'Category2'
       expect(page).to have_content 'RewardTitle'
       expect(page).to have_content 'RewardDescription'
       expect(page).to have_content '3'
+      expect(page).to have_content 'Post Delivery'
       expect(page).to have_content 'Category1'
       expect(page).to have_content 'RewardTitle2'
       expect(page).to have_content 'RewardDescription2'
       expect(page).to have_content '4'
+      expect(page).to have_content 'Online'
       expect(page).to have_content 'Category2'
     end
 
@@ -58,18 +62,22 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       expect(Reward.first.title).to eq 'RewardTitle'
       expect(Reward.first.description).to eq 'ChangedRewardDescription'
       expect(Reward.first.price).to eq 4
+      expect(Reward.first.delivery_method).to eq 'online'
       expect(Reward.first.category.title).to eq 'ChangedCategory'
       expect(Reward.last.title).to eq 'RewardTitle3'
       expect(Reward.last.description).to eq 'RewardDescription3'
       expect(Reward.last.price).to eq 7
+      expect(Reward.last.delivery_method).to eq 'post_delivery'
       expect(Reward.last.category.title).to eq 'Category3'
       expect(page).to have_content 'RewardTitle'
       expect(page).to have_content 'ChangedRewardDescription'
       expect(page).to have_content '4'
+      expect(page).to have_content 'Online'
       expect(page).to have_content 'ChangedCategory'
       expect(page).to have_content 'RewardTitle3'
       expect(page).to have_content 'RewardDescription2'
       expect(page).to have_content '7'
+      expect(page).to have_content 'Post Delivery'
       expect(page).to have_content 'Category3'
     end
 
@@ -83,7 +91,8 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       click_button 'Import Rewards'
 
       expect(page).to have_content "Errors in CSV file: Validation failed: Title can't be blank, " \
-                                   "Description can't be blank, Price is not a number."
+                                   "Description can't be blank, Delivery method can't be blank, " \
+                                   'Price is not a number.'
       expect(Reward.count).to eq 0
     end
   end

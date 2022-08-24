@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header">
+  <h4 class=text-center>Delivery address:</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <%= fields_for :address, current_employee.address do |a| %>
+        <div class="form-group mt-3">
+          <% order_form.errors.each do |error| %>
+            <li><strong><%= error.full_message %></strong></li>
+          <% end %>
+        </div>
+      
+        <div class="field form-group mt-3 col">
+          <%= a.text_field :street, autofocus: true, autocomplete: "street", class:"form-control", placeholder:"Street" %>
+        </div>
+        <div class="field form-group mt-3 col">
+          <%= a.text_field :postcode, autofocus: true, autocomplete: "postcode", class:"form-control", placeholder:"Postcode" %>
+        </div>
+        <div class="field form-group mt-3 col">
+          <%= a.text_field :city, autofocus: true, autocomplete: "city", class:"form-control", placeholder:"City" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

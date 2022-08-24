@@ -1,3 +1,3 @@
-Title,Description,Price,Category
-RewardTitle,RewardDescription,3,Category1
-RewardTitle2,RewardDescription2,4,Category2
+Title,Description,Price,DeliveryMethod,Category
+RewardTitle,RewardDescription,3,post_delivery,Category1
+RewardTitle2,RewardDescription2,4,online,Category2

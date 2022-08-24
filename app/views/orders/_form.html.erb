@@ -1,10 +1,4 @@
  <%= form_with(model: order) do |form| %>
-  <div class="form-group mt-3">
-    <% order.errors.each do |error| %>
-      <li><strong><%= error.full_message %></strong></li>
-    <% end %>
-  </div>
-
   <div class="field form-group mt-3">
     <table class='table'>
       <thead>
@@ -26,6 +20,10 @@
           <td><%= current_employee.email %></td>
         </tr>
         <tr>
+          <td>Delivery method:</td>
+          <td><%= @reward.delivery_method %></td>
+        </tr>
+        <tr>
           <td>Points before purchase:</td>
           <td><%= current_employee.earned_points %></td>
         </tr>
@@ -35,9 +33,11 @@
         </tr>
       </tbody>      
     </table>
-  
+
+    <%= render 'delivery_address_form', order_form: order_form if @reward.delivery_method_post_delivery? %>
+
     <%= form.hidden_field :reward_id, value: @reward.id %>
     <%= form.hidden_field :employee_id, value: current_employee.id %>
-    <%= form.submit "Buy", data: { confirm: 'Are you sure you want to purchase this reward?'}, class: "btn btn-dark btn-lg" %>
+    <%= form.submit "Buy", data: { confirm: 'Are you sure you want to purchase this reward?'}, class: "btn btn-dark btn-lg mt-3" %>
   </div>
 <% end %>
