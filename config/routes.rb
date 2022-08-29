@@ -44,5 +44,11 @@ Rails.application.routes.draw do
         get :dashboard
       end
     end
+    resources :online_codes, except: %i[show] do
+      collection do
+        get 'new_import_from_csv'
+        post 'import_from_csv'
+      end
+    end
   end
 end

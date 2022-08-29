@@ -1,6 +1,7 @@
 class Reward < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :employees, through: :orders
+  has_many :online_codes, dependent: :destroy
   belongs_to :category, optional: true
 
   validates :title, :description, :price, :delivery_method, presence: true
@@ -14,5 +15,15 @@ class Reward < ApplicationRecord
 
   def display_category
     category.present? ? category.title : 'without category'
+  end
+
+  def number_of_available_items
+    delivery_method_online? ? online_codes.where(status: :not_used).count : 'undetermined'
+  end
+
+  def available_for_purchase?
+    return true if delivery_method_post_delivery? || number_of_available_items.positive?
+
+    false
   end
 end
