@@ -34,7 +34,7 @@
       </tbody>      
     </table>
 
-    <%= render 'delivery_address_form', order_form: order_form if @reward.delivery_method_post_delivery? %>
+    <%= render 'delivery_address_form' if @reward.delivery_method_post_delivery? %>
 
     <%= form.hidden_field :reward_id, value: @reward.id %>
     <%= form.hidden_field :employee_id, value: current_employee.id %>
