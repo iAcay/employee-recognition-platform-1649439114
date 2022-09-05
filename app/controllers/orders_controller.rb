@@ -33,7 +33,9 @@ class OrdersController < ApplicationController
   end
 
   def address_params
-    params.require(:address).permit(:street, :postcode, :city) if params[:address]
+    return {} unless params[:address]
+
+    params.require(:address).permit(:street, :postcode, :city)
   end
 
   def create_order_params
