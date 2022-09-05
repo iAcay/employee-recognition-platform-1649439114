@@ -20,8 +20,9 @@ class CreateOrderService
       @order.reward_snapshot = @reward
       @order.save!
       @employee.decrement(:earned_points, @reward.price).save!
-      send_email_to_employee if @reward.delivery_method_online?
+      @order.status_delivered! if @reward.delivery_method_online?
     end
+    send_email_to_employee if @reward.delivery_method_online?
     true
   rescue ActiveRecord::StatementInvalid, ActiveRecord::RecordInvalid => e
     @errors << e.message
@@ -55,7 +56,6 @@ class CreateOrderService
   end
 
   def send_email_to_employee
-    @order.status_delivered!
     EmployeeMailer.delivery_confirmation_email(@order).deliver_now
   end
 end
