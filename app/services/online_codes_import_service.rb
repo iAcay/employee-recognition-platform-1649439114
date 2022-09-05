@@ -4,7 +4,7 @@ class OnlineCodesImportService
   attr_reader :errors
 
   def initialize(params)
-    @file = params[:online_code][:file]
+    @file = params[:file]
     @errors = []
   end
 
