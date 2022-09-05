@@ -18,7 +18,7 @@ class Reward < ApplicationRecord
   end
 
   def number_of_available_items
-    delivery_method_online? ? online_codes.where(status: :not_used).count : 'undetermined'
+    delivery_method_online? ? online_codes.where(status: :not_used).count : 0
   end
 
   def available_for_purchase?
