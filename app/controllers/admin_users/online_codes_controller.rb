@@ -39,7 +39,7 @@ module AdminUsers
     end
 
     def new_import_from_csv
-      render :new_import_from_csv, locals: { online_code: OnlineCode.new }
+      render :new_import_from_csv
     end
 
     def import_from_csv
