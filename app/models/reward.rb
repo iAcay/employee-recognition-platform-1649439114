@@ -17,13 +17,13 @@ class Reward < ApplicationRecord
     category.present? ? category.title : 'without category'
   end
 
-  def number_of_available_items
-    delivery_method_online? ? online_codes.where(status: :not_used).count : 0
+  def available_for_purchase?
+    delivery_method_post_delivery? || number_of_available_items.positive?
   end
 
-  def available_for_purchase?
-    return true if delivery_method_post_delivery? || number_of_available_items.positive?
+  private
 
-    false
+  def number_of_available_items
+    delivery_method_online? ? online_codes.where(status: :not_used).count : 0
   end
 end
