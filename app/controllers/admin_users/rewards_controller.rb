@@ -43,19 +43,12 @@ module AdminUsers
     end
 
     def import_from_csv
-      if params[:reward][:file].nil?
-        redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Please select a file'
-      elsif File.extname(params[:reward][:file]) != '.csv'
-        redirect_to new_import_from_csv_admin_users_rewards_path, alert: 'Only .csv files are allowed.'
+      rewards_import_service = RewardsImportService.new(params)
+
+      if rewards_import_service.call
+        redirect_to admin_users_rewards_path, notice: 'Rewards were successfully imported.'
       else
-        begin
-          RewardsImportService.import(params[:reward][:file])
-        rescue ActiveRecord::RecordInvalid => e
-          redirect_to new_import_from_csv_admin_users_rewards_path,
-                      alert: "Errors in CSV file: <br> #{e.message}."
-        else
-          redirect_to admin_users_rewards_path, notice: 'Rewards were successfully imported.'
-        end
+        redirect_to admin_users_rewards_path, alert: rewards_import_service.errors.join('; ')
       end
     end
 
