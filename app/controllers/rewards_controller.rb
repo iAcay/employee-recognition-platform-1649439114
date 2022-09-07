@@ -11,7 +11,11 @@ class RewardsController < ApplicationController
   end
 
   def show
-    render :show, locals: { reward: reward }
+    if reward.available_for_purchase?
+      render :show, locals: { reward: reward }
+    else
+      redirect_back fallback_location: rewards_path, alert: 'Reward is not available now.'
+    end
   end
 
   private

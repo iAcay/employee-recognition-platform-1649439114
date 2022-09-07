@@ -49,8 +49,8 @@
           </div>
 
           <figcaption class="block-footer text-end">
-            <%= link_to 'Show', reward_path(reward), class: 'btn btn-outline-primary' %>
             <% if reward.available_for_purchase? %>
+              <%= link_to 'Show', reward_path(reward), class: 'btn btn-outline-primary' %>
               <%= link_to 'Buy', new_order_path(reward: reward), class: 'btn btn-outline-success' %>
             <% else %>
               <%= link_to 'Not available', '#', class: 'btn btn-outline-warning disabled', aria: { hidden: true } %>
