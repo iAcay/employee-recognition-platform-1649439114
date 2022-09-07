@@ -8,7 +8,7 @@ class OnlineCodesImportService
     @errors = []
   end
 
-  def import
+  def call
     if @file.nil?
       @errors << 'file cannot be empty'
       false
