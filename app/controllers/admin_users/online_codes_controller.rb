@@ -45,7 +45,7 @@ module AdminUsers
     def import_from_csv
       online_codes = OnlineCodesImportService.new(params)
 
-      if online_codes.import
+      if online_codes.call
         redirect_to admin_users_online_codes_path, notice: 'Online codes were successfully imported.'
       else
         redirect_to admin_users_online_codes_path, alert: online_codes.errors.join('; ')

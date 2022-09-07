@@ -9,7 +9,7 @@ RSpec.describe OnlineCodesImportService do
       service = described_class.new(params)
 
       result = nil
-      expect { result = service.import }.to change(OnlineCode, :count).by(2)
+      expect { result = service.call }.to change(OnlineCode, :count).by(2)
       expect(result).to be true
     end
 
@@ -18,7 +18,7 @@ RSpec.describe OnlineCodesImportService do
       params = { file: fixture_file_upload('./spec/fixtures/online_codes/invalid_no_code_online_codes_import.csv') }
       service = described_class.new(params)
 
-      expect(service.import).to be false
+      expect(service.call).to be false
       expect(service.errors.to_s).to include "Code can't be blank"
     end
 
@@ -26,7 +26,7 @@ RSpec.describe OnlineCodesImportService do
       params = { file: fixture_file_upload('./spec/fixtures/online_codes/invalid_no_reward_online_codes_import.csv') }
       service = described_class.new(params)
 
-      expect(service.import).to be false
+      expect(service.call).to be false
       expect(service.errors.to_s).to include "Couldn't find Reward"
     end
   end

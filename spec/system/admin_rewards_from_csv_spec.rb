@@ -90,9 +90,9 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       attach_file(File.absolute_path('./spec/fixtures/rewards/invalid_rewards_import.csv'))
       click_button 'Import Rewards'
 
-      expect(page).to have_content "Errors in CSV file: Validation failed: Title can't be blank, " \
+      expect(page).to have_content "Validation failed: Title can't be blank, " \
                                    "Description can't be blank, Delivery method can't be blank, " \
-                                   'Price is not a number.'
+                                   'Price is not a number'
       expect(Reward.count).to eq 0
     end
   end
