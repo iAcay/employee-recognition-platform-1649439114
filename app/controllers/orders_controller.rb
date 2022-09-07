@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
       redirect_to rewards_path, notice: "This reward is too expensive for you.
                                         You need #{@reward.price - current_employee.earned_points} points more."
     else
-      render :new, locals: { order: Order.new, order_form: OrderForm.new }
+      render :new, locals: { order: Order.new }
     end
   end
 
@@ -17,12 +17,11 @@ class OrdersController < ApplicationController
       redirect_to rewards_path, notice: "This reward is too expensive for you.
                                           You need #{@reward.price - current_employee.earned_points} points more."
     else
-      order_form = OrderForm.new(order_form_params)
-      if order_form.save
+      create_order = CreateOrderService.new(create_order_params)
+      if create_order.call
         redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
       else
-        render :new, locals: { order: Order.new, order_form: order_form }
-        flash[:alert] = 'Unfortunately something went wrong :('
+        redirect_back fallback_location: rewards_path, alert: create_order.errors.join('; ')
       end
     end
   end
@@ -34,10 +33,12 @@ class OrdersController < ApplicationController
   end
 
   def address_params
-    params.require(:address).permit(:street, :postcode, :city) if params[:address]
+    return {} unless params[:address]
+
+    params.require(:address).permit(:street, :postcode, :city)
   end
 
-  def order_form_params
+  def create_order_params
     order_params.merge(address_params)
   end
 end

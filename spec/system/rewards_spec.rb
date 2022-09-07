@@ -4,6 +4,7 @@ require 'factory_bot_rails'
 RSpec.describe 'Working on rewards', type: :system do
   let(:employee) { create(:employee) }
   let!(:reward) { create(:reward) }
+  let!(:online_code) { create(:online_code, reward: reward) }
 
   before do
     driven_by(:rack_test)
@@ -12,8 +13,6 @@ RSpec.describe 'Working on rewards', type: :system do
 
   context 'when listing all rewards' do
     it 'enables to list all rewards with their title and price without description' do
-      expect(Reward.count).to eq 1
-
       visit root_path
       click_link 'Rewards'
 

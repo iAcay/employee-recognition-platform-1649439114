@@ -5,12 +5,6 @@
   <div class="card-body">
     <div class="row">
       <%= fields_for :address, current_employee.address do |a| %>
-        <div class="form-group mt-3">
-          <% order_form.errors.each do |error| %>
-            <li><strong><%= error.full_message %></strong></li>
-          <% end %>
-        </div>
-      
         <div class="field form-group mt-3 col">
           <%= a.text_field :street, autofocus: true, autocomplete: "street", class:"form-control", placeholder:"Street" %>
         </div>

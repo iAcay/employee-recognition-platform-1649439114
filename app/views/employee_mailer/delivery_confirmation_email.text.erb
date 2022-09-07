@@ -3,5 +3,8 @@ Thank you for purchasing a reward: <%= @reward.title %> !
 
 We kindly inform about delivering above reward. It's happened today!
 
+<% if @order.online_code.present? %>
+  Your online code is: <%= @order.online_code.code %> 
+<% end %>
 
 AppForEmployees

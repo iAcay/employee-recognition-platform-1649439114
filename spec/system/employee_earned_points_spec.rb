@@ -17,6 +17,8 @@ RSpec.describe 'Earned points', type: :system do
 
     it 'decreases number of earned points after buying a reward' do
       reward = create(:reward)
+      create(:online_code, reward: reward)
+
       expect(employee.earned_points).to eq 2
       click_link 'Rewards'
       click_link 'Buy'
@@ -32,6 +34,8 @@ RSpec.describe 'Earned points', type: :system do
 
     it "rejects an attempt to buy a reward if it's not enough points" do
       reward = create(:reward, price: 3)
+      create(:online_code, reward: reward)
+
       expect(employee.earned_points).to eq 2
       click_link 'Rewards'
       click_link 'Buy'

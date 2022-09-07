@@ -1,0 +1,23 @@
+<div class="card-body">
+  <%= form_with(model: [:admin_users, online_code]) do |form| %>
+    <div class="form-group mt-3">
+      <% online_code.errors.each do |error| %>
+        <li><strong><%= error.full_message %></strong></li>
+      <% end %>
+    </div>
+
+    <div class="field form-group mt-3">
+      <%= form.text_field :code, autofocus: true, autocomplete: "code", class:"form-control", placeholder:"Code" %>
+    </div>
+
+    <div class="field form-group mt-3">
+      <%= form.label :reward_id %>
+      <%= form.collection_select :reward_id, Reward.where(delivery_method: :online).order(title: :asc), :id, :title, prompt: true %>
+    </div>
+
+    <div class="actions mt-3">
+      <%= form.submit(online_code.new_record? ? "Create" : "Update", class: "btn btn-dark") %>
+    </div>
+  <% end %>
+  <%= link_to "Back", admin_users_online_codes_path, class: 'btn btn-outline-secondary mt-3' %>
+</div>
