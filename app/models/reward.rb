@@ -5,6 +5,7 @@ class Reward < ApplicationRecord
   belongs_to :category, optional: true
 
   validates :title, :description, :price, :delivery_method, presence: true
+  validates :title, uniqueness: { case_sensitive: false }
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 
   enum delivery_method: { online: 0, post_delivery: 1 }, _prefix: true
