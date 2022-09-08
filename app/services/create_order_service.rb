@@ -15,7 +15,7 @@ class CreateOrderService
     return false unless reward_for_sale?
 
     ActiveRecord::Base.transaction do
-      create_or_update_address if @reward.delivery_method_post_delivery?
+      create_or_update_address if @reward.delivery_method_post?
       assign_online_code if @reward.delivery_method_online?
       @order.reward_snapshot = @reward
       @order.save!
