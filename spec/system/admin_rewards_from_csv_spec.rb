@@ -24,7 +24,7 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       expect(Reward.first.title).to eq 'RewardTitle'
       expect(Reward.first.description).to eq 'RewardDescription'
       expect(Reward.first.price).to eq 3
-      expect(Reward.first.delivery_method).to eq 'post_delivery'
+      expect(Reward.first.delivery_method).to eq 'post'
       expect(Reward.first.category.title).to eq 'Category1'
       expect(Reward.last.title).to eq 'RewardTitle2'
       expect(Reward.last.description).to eq 'RewardDescription2'
@@ -34,7 +34,7 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       expect(page).to have_content 'RewardTitle'
       expect(page).to have_content 'RewardDescription'
       expect(page).to have_content '3'
-      expect(page).to have_content 'Post Delivery'
+      expect(page).to have_content 'Post'
       expect(page).to have_content 'Category1'
       expect(page).to have_content 'RewardTitle2'
       expect(page).to have_content 'RewardDescription2'
@@ -67,7 +67,7 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       expect(Reward.last.title).to eq 'RewardTitle3'
       expect(Reward.last.description).to eq 'RewardDescription3'
       expect(Reward.last.price).to eq 7
-      expect(Reward.last.delivery_method).to eq 'post_delivery'
+      expect(Reward.last.delivery_method).to eq 'post'
       expect(Reward.last.category.title).to eq 'Category3'
       expect(page).to have_content 'RewardTitle'
       expect(page).to have_content 'ChangedRewardDescription'
@@ -77,7 +77,7 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
       expect(page).to have_content 'RewardTitle3'
       expect(page).to have_content 'RewardDescription2'
       expect(page).to have_content '7'
-      expect(page).to have_content 'Post Delivery'
+      expect(page).to have_content 'Post'
       expect(page).to have_content 'Category3'
     end
 

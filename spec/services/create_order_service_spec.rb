@@ -40,7 +40,7 @@ RSpec.describe CreateOrderService do
   context 'when buying a reward with post delivery method' do
     it 'returns true, adds new order and adress to database when all params are properly set and does not send email' do
       employee = create(:employee, earned_points: 1)
-      reward_with_post_delivery = create(:reward, delivery_method: 'post_delivery')
+      reward_with_post_delivery = create(:reward, delivery_method: 'post')
       order_params = { employee_id: employee.id, reward_id: reward_with_post_delivery.id }
       address_params = { street: '221B Baker Street', postcode: 'NW1 6XE', city: 'London' }
       service = described_class.new(order_params.merge(address_params))
@@ -60,7 +60,7 @@ RSpec.describe CreateOrderService do
 
     it "updates employee's address when address already exists" do
       employee = create(:employee, earned_points: 1)
-      reward_with_post_delivery = create(:reward, delivery_method: 'post_delivery')
+      reward_with_post_delivery = create(:reward, delivery_method: 'post')
       create(:address, employee: employee)
       order_params = { employee_id: employee.id, reward_id: reward_with_post_delivery.id }
       address_params = { street: '221B Baker Street', postcode: 'NW1 6XE', city: 'London' }
@@ -78,7 +78,7 @@ RSpec.describe CreateOrderService do
 
     it 'returns false while address data are not proper' do
       employee = create(:employee, earned_points: 1)
-      reward_with_post_delivery = create(:reward, delivery_method: 'post_delivery')
+      reward_with_post_delivery = create(:reward, delivery_method: 'post')
       order_params = { employee_id: employee.id, reward_id: reward_with_post_delivery.id }
       address_params = {}
       service = described_class.new(order_params.merge(address_params))
