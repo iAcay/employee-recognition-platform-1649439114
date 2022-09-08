@@ -8,7 +8,7 @@ class Reward < ApplicationRecord
   validates :title, uniqueness: { case_sensitive: false }
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 
-  enum delivery_method: { online: 0, post: 1 }, _prefix: true
+  enum delivery_method: { online: 0, post: 1, pick_up: 2 }, _prefix: true
   scope :by_category, ->(category) { where(category: category) if Category.exists?(id: category) }
 
   has_one_attached :photo
@@ -19,7 +19,7 @@ class Reward < ApplicationRecord
   end
 
   def available_for_purchase?
-    delivery_method_post? || number_of_available_items.positive?
+    delivery_method_post? || delivery_method_pick_up? || number_of_available_items.positive?
   end
 
   private

@@ -1,5 +1,5 @@
 class CreateOrderService
-  attr_reader :errors
+  attr_reader :errors, :order
 
   def initialize(params)
     @reward = Reward.find_by(id: params[:reward_id])
@@ -22,7 +22,7 @@ class CreateOrderService
       @employee.decrement(:earned_points, @reward.price).save!
       @order.status_delivered! if @reward.delivery_method_online?
     end
-    send_email_to_employee if @reward.delivery_method_online?
+    send_email_to_employee unless @reward.delivery_method_post?
     true
   rescue ActiveRecord::StatementInvalid, ActiveRecord::RecordInvalid => e
     @errors << e.message
@@ -56,6 +56,10 @@ class CreateOrderService
   end
 
   def send_email_to_employee
-    EmployeeMailer.online_delivery_confirmation_email(@order).deliver_now
+    if @reward.delivery_method_online?
+      EmployeeMailer.online_delivery_confirmation_email(@order).deliver_now
+    elsif @reward.delivery_method_pick_up?
+      EmployeeMailer.pick_up_delivery_instructions_email(@order).deliver_now
+    end
   end
 end
