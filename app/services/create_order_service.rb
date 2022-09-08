@@ -56,6 +56,6 @@ class CreateOrderService
   end
 
   def send_email_to_employee
-    EmployeeMailer.delivery_confirmation_email(@order).deliver_now
+    EmployeeMailer.online_delivery_confirmation_email(@order).deliver_now
   end
 end
