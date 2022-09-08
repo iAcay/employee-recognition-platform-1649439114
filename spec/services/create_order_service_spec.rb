@@ -89,4 +89,27 @@ RSpec.describe CreateOrderService do
       expect(service.errors.to_s).to include "City can't be blank"
     end
   end
+
+  context 'when buying a reward with pick-up delivery method' do
+    it 'returns true, adds new order to database when all params are properly set' do
+      employee = create(:employee, earned_points: 1)
+      reward_with_pick_up_delivery = create(:reward, delivery_method: 'pick_up')
+      order_params = { employee_id: employee.id, reward_id: reward_with_pick_up_delivery.id }
+      service = described_class.new(order_params)
+
+      result = nil
+      expect { result = service.call }.to change(Order, :count).by(1)
+      expect(result).to be true
+    end
+
+    it 'sends an email with instructions after purchase a reward with pick-up delivery' do
+      employee = create(:employee, earned_points: 1)
+      reward_with_pick_up_delivery = create(:reward, delivery_method: 'pick_up')
+      order_params = { employee_id: employee.id, reward_id: reward_with_pick_up_delivery.id }
+      service = described_class.new(order_params)
+
+      expect { service.call }.to change(ActionMailer::Base.deliveries, :count).by(1)
+      expect(ActionMailer::Base.deliveries.last.subject).to eq 'Pick-up delivery instructions'
+    end
+  end
 end
