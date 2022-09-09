@@ -1,5 +1,5 @@
 class CreateOrderService
-  attr_reader :errors, :order
+  attr_reader :errors
 
   def initialize(params)
     @reward = Reward.find_by(id: params[:reward_id])
