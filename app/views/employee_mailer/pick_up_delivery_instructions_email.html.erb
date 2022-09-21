@@ -7,7 +7,7 @@
     <h1>Thank you for purchasing a reward: <%= @reward.title %> !</h1>
     <p>We kindly inform about receiving order on above reward.</p>
     <p>Below we leave instructions related to picking up ordered reward.</p>
-    <p>You can pick up your reward from <%= (Time.now + (60*60*24*3)).strftime('%e %B %Y') %></p>
+    <p>You can pick up your reward from <%= (Time.current + 3.days).strftime('%e %B %Y') %></p>
     <p>Pickup address: 221B Baker Street, NW1 6XE London</p>
     <p>AppForEmployees</p>
   </body>
