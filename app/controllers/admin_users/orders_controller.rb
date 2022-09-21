@@ -11,7 +11,7 @@ module AdminUsers
         redirect_back fallback_location: admin_users_employees_path,
                       notice: 'The order has already been delivered.'
       elsif order.update(status: :delivered)
-        EmployeeMailer.post_delivery_confirmation_email(order).deliver_now
+        send_confirmation_email_to_employee
         redirect_back fallback_location: admin_users_employees_path,
                       notice: 'The order has been delivered successfully!'
       else
@@ -36,6 +36,14 @@ module AdminUsers
 
     def order
       @order ||= Order.find(params[:id])
+    end
+
+    def send_confirmation_email_to_employee
+      if order.reward_snapshot.delivery_method_post?
+        EmployeeMailer.post_delivery_confirmation_email(order).deliver_now
+      elsif order.reward_snapshot.delivery_method_pick_up?
+        EmployeeMailer.pick_up_delivery_confirmation_email(order).deliver_now
+      end
     end
   end
 end
