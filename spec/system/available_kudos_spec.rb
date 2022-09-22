@@ -24,7 +24,6 @@ RSpec.describe 'Available number of kudos', type: :system do
 
       employee.reload
       expect(page).to have_content 'Available kudos: 9'
-      expect(Kudo.count).to eq 1
       expect(employee.number_of_available_kudos).to eq 9
     end
   end
@@ -39,9 +38,7 @@ RSpec.describe 'Available number of kudos', type: :system do
       expect(page).to have_content 'Available kudos: 0'
 
       click_link 'New Kudo'
-
       expect(page).to have_content 'You cannot add more kudos.'
-      expect(employee.number_of_available_kudos).to eq 0
     end
   end
 end

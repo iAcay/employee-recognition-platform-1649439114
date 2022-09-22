@@ -19,7 +19,6 @@ RSpec.describe 'Earned points', type: :system do
       reward = create(:reward)
       create(:online_code, reward: reward)
 
-      expect(employee.earned_points).to eq 2
       click_link 'Rewards'
       click_link 'Buy'
       expect(page).to have_content 'Order details:'
@@ -36,14 +35,12 @@ RSpec.describe 'Earned points', type: :system do
       reward = create(:reward, price: 3)
       create(:online_code, reward: reward)
 
-      expect(employee.earned_points).to eq 2
       click_link 'Rewards'
       click_link 'Buy'
 
       expect(page).to have_content 'This reward is too expensive for you. ' \
                                    "You need #{reward.price - employee.earned_points} points more."
       employee.reload
-      expect(employee.earned_points).to eq 2
       expect(employee.rewards).not_to include reward
     end
   end

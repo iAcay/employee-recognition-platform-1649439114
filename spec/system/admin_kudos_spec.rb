@@ -33,10 +33,8 @@ RSpec.describe 'Listing and deleting kudos by admin', type: :system do
   context 'when delete the kudo' do
     it 'enables to delete the kudo' do
       visit 'admin/kudos'
-      click_link 'Destroy'
-
+      expect { click_link 'Destroy' }.to change(Kudo, :count).by(-1)
       expect(page).to have_content 'Kudo was successfully destroyed.'
-      expect(Kudo.count).to eq 0
     end
   end
 end

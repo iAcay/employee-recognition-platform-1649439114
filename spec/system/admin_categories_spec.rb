@@ -19,22 +19,14 @@ RSpec.describe 'Categories', type: :system do
     end
 
     it 'creates a new category' do
-      expect(Category.count).to eq 0
-
       fill_in 'Title', with: category.title
-      click_button 'Create'
-
-      expect(Category.count).to eq 1
+      expect { click_button 'Create' }.to change(Category, :count).by(1)
       expect(page).to have_content 'Category was successfully created.'
     end
 
     it 'checks validation notices' do
-      expect(Category.count).to eq 0
-
       fill_in 'Title', with: ''
-      click_button 'Create'
-
-      expect(Category.count).to eq 0
+      expect { click_button 'Create' }.not_to change(Category, :count)
       expect(page).to have_content "Title can't be blank"
     end
   end
