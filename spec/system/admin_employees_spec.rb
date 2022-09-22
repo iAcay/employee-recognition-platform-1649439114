@@ -14,8 +14,6 @@ RSpec.describe 'Modifying employees', type: :system do
 
   context 'when listing all employees' do
     it 'enables to list' do
-      expect(Employee.count).to eq 1
-
       visit '/admin/pages/dashboard'
       click_link 'Manage Employees'
 
@@ -41,11 +39,9 @@ RSpec.describe 'Modifying employees', type: :system do
       fill_in 'Email', with: 'changed@mail.com'
       fill_in 'Password', with: 'password1'
       fill_in 'Number of kudos', with: second_number_of_kudos
-
       click_button 'Update'
 
       employee.reload
-
       expect(page).to have_content 'Employee was successfully updated.'
       expect(employee.first_name).to eq 'ChangedFirstName'
       expect(employee.last_name).to eq 'ChangedLastName'
@@ -60,11 +56,9 @@ RSpec.describe 'Modifying employees', type: :system do
 
       fill_in 'Email', with: 'changed@mail.com'
       fill_in 'Number of kudos', with: second_number_of_kudos
-
       click_button 'Update'
 
       employee.reload
-
       expect(page).to have_content 'Employee was successfully updated.'
       expect(employee.email).to eq 'changed@mail.com'
       expect(employee.number_of_available_kudos).to eq second_number_of_kudos
@@ -80,7 +74,6 @@ RSpec.describe 'Modifying employees', type: :system do
       fill_in 'Last Name', with: ''
       fill_in 'Email', with: employee2.email
       fill_in 'Password', with: '123'
-
       click_button 'Update'
 
       expect(page).to have_content "First name can't be blank"
@@ -93,10 +86,8 @@ RSpec.describe 'Modifying employees', type: :system do
   context 'when deleting employee' do
     it 'enables to delete employee' do
       visit 'admin/employees'
-      click_link 'Destroy'
-
+      expect { click_link 'Destroy' }.to change(Employee, :count).by(-1)
       expect(page).to have_content 'Employee was successfully destroyed.'
-      expect(Employee.count).to eq 0
     end
   end
 

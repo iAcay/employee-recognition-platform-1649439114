@@ -18,27 +18,19 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
     end
 
     it 'enables to create a new reward' do
-      expect(Reward.count).to eq 0
-
       fill_in 'Title', with: reward.title
       fill_in 'Description', with: reward.description
       fill_in 'Price', with: reward.price
-      click_button 'Create'
-
-      expect(Reward.count).to eq 1
+      expect { click_button 'Create' }.to change(Reward, :count).by(1)
       expect(page).to have_content 'Reward was successfully created.'
     end
 
     it 'checks validation notices' do
-      expect(Reward.count).to eq 0
-
       fill_in 'Title', with: ''
       fill_in 'Description', with: ''
       # CHECK NOTICE WHEN PRICE IS SET ON LESS THAN 1
       fill_in 'Price', with: 0
-      click_button 'Create'
-
-      expect(Reward.count).to eq 0
+      expect { click_button 'Create' }.not_to change(Reward, :count)
       expect(page).to have_content "Title can't be blank"
       expect(page).to have_content "Description can't be blank"
       expect(page).to have_content 'Price must be greater than or equal to 1'
@@ -46,8 +38,6 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
       # CHECK NOTICE WHEN PRICE IS NOT A NUMBER
       fill_in 'Price', with: 'random'
       click_button 'Create'
-
-      expect(Reward.count).to eq 0
       expect(page).to have_content 'Price is not a number'
     end
   end
@@ -55,9 +45,6 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
   context 'when listing all rewards' do
     it 'enables to list all rewards' do
       reward = create(:reward)
-
-      expect(Reward.count).to eq 1
-
       visit '/admin/rewards'
 
       expect(page).to have_content reward.title
@@ -95,9 +82,8 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
 
       visit '/admin/pages/dashboard'
       click_link 'Manage Rewards'
-
       click_link 'Edit'
-      attach_file 'Photo', './app/assets/images/test.jpeg'
+      attach_file 'Photo', './spec/fixtures/rewards/test_image.jpeg'
       click_button 'Update'
 
       reward.reload
@@ -109,15 +95,11 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
     let!(:reward) { create(:reward) }
 
     it 'enables to delete reward' do
-      expect(Reward.count).to eq 1
-
       visit '/admin/pages/dashboard'
       click_link 'Manage Rewards'
 
-      click_link 'Destroy'
-
+      expect { click_link 'Destroy' }.to change(Reward, :count).by(-1)
       expect(page).to have_content 'Reward was successfully deleted.'
-      expect(Reward.count).to eq 0
     end
   end
 end

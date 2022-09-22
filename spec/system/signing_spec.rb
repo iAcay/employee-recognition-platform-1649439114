@@ -35,10 +35,8 @@ RSpec.describe 'Signing', type: :system do
       fill_in 'Email', with: employee.email
       fill_in 'Password', with: employee.password
       fill_in 'Password confirmation', with: employee.password
-      click_button 'Sign up'
-
+      expect { click_button 'Sign up' }.to change(Employee, :count).by(1)
       expect(page).to have_content 'Welcome! You have signed up successfully.'
-      expect(Employee.count).to eq 1
     end
   end
 end
