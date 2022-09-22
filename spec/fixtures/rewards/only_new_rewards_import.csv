@@ -1,3 +1,4 @@
 Title,Description,Price,DeliveryMethod,Category
 RewardTitle,RewardDescription,3,post,Category1
 RewardTitle2,RewardDescription2,4,online,Category2
+RewardTitle3,RewardDescription3,5,pick_up,Category3
