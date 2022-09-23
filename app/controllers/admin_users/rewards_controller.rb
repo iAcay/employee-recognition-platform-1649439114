@@ -35,7 +35,8 @@ module AdminUsers
     end
 
     def destroy
-      redirect_to admin_users_rewards_path, notice: 'Reward was successfully deleted.' if reward.destroy
+      reward.destroy
+      redirect_to admin_users_rewards_path, notice: 'Reward was successfully deleted.'
     end
 
     def new_import_from_csv
