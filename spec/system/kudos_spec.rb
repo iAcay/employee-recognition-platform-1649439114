@@ -27,15 +27,10 @@ RSpec.describe 'Working on kudos', type: :system do
     end
 
     it 'increases the number of earned points after creating a kudo' do
-      expect(receiver.earned_points).to eq 0
-
       fill_in 'Title', with: kudo.title
       fill_in 'Content', with: kudo.content
       select company_value.title, from: 'Company value'
-      click_button 'Create Kudo'
-
-      receiver.reload
-      expect(receiver.earned_points).to eq 1
+      expect { click_button 'Create Kudo' }.to change { receiver.reload.earned_points }.by(1)
     end
 
     it 'checks validation' do
@@ -57,24 +52,20 @@ RSpec.describe 'Working on kudos', type: :system do
 
     it 'enables to edit a kudo' do
       new_company_value = create(:company_value, title: 'Company Value test')
-      edited_kudo = create(:kudo, giver: giver, company_value: company_value)
-
-      expect(edited_kudo.title).to eq 'Great Worker!'
-      expect(edited_kudo.content).to eq 'He did his work three times faster than others.'
-      expect(edited_kudo.company_value.title).to eq 'Company Value Title'
+      edited_kudo = create(:kudo, giver: giver, receiver: receiver, company_value: company_value)
 
       visit root_path
       click_link 'Edit'
-      fill_in 'Title', with: 'Super Worker!'
-      fill_in 'Content', with: 'He works with really good attitude!'
+      fill_in 'Title', with: 'ChangedTitle'
+      fill_in 'Content', with: 'ChangedContent'
       select new_company_value.title, from: 'Company value'
       click_button 'Update Kudo'
 
-      edited_kudo.reload
       expect(page).to have_content 'Kudo was successfully updated.'
-      expect(edited_kudo.title).to eq 'Super Worker!'
-      expect(edited_kudo.content).to eq 'He works with really good attitude!'
-      expect(edited_kudo.company_value.title).to eq 'Company Value test'
+      edited_kudo.reload
+      expect(edited_kudo.title).to eq 'ChangedTitle'
+      expect(edited_kudo.content).to eq 'ChangedContent'
+      expect(edited_kudo.company_value.title).to eq new_company_value.title
     end
 
     it 'changes the number of earned points after changing kudo receiver' do
@@ -104,13 +95,28 @@ RSpec.describe 'Working on kudos', type: :system do
       expect(previous_receiver.earned_points).to eq 0
     end
 
-    it 'checks validation' do
+    it 'checks validation when editing kudo without change receiver' do
       create(:kudo, giver: giver, company_value: company_value)
       visit root_path
       click_link 'Edit'
 
       fill_in 'Title', with: ''
       fill_in 'Content', with: ''
+      click_button 'Update Kudo'
+
+      expect(page).to have_content "Title can't be blank"
+      expect(page).to have_content "Content can't be blank"
+    end
+
+    it 'checks validation when editing kudo with change receiver' do
+      create(:kudo, giver: giver, company_value: company_value)
+      new_receiver = create(:employee)
+      visit root_path
+      click_link 'Edit'
+
+      fill_in 'Title', with: ''
+      fill_in 'Content', with: ''
+      select new_receiver.full_name, from: 'Receiver'
       click_button 'Update Kudo'
 
       expect(page).to have_content "Title can't be blank"

@@ -116,5 +116,12 @@ RSpec.describe 'Working on rewards', type: :system do
       expect(page).to have_content reward.price
       expect(page).to have_content reward.description
     end
+
+    it 'does not show a reward when it is not available for purchase' do
+      reward_not_for_sale = create(:reward)
+      visit "/rewards/#{reward_not_for_sale.id}"
+
+      expect(page).to have_content 'Reward is not available now.'
+    end
   end
 end

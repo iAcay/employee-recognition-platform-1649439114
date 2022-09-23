@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'factory_bot_rails'
 
-RSpec.describe 'Modifying employees', type: :system do
+RSpec.describe 'Modifying employees data', type: :system do
   let(:first_number_of_kudos) { 7 }
   let(:second_number_of_kudos) { 10 }
   let(:admin_user) { create(:admin_user) }
@@ -64,7 +64,7 @@ RSpec.describe 'Modifying employees', type: :system do
       expect(employee.number_of_available_kudos).to eq second_number_of_kudos
     end
 
-    it 'checks validation' do
+    it "checks validation when editing all employee's data" do
       visit '/admin/employees'
       click_link 'Edit'
 
@@ -80,6 +80,22 @@ RSpec.describe 'Modifying employees', type: :system do
       expect(page).to have_content "Last name can't be blank"
       expect(page).to have_content 'Email has already been taken'
       expect(page).to have_content 'Password is too short (minimum is 6 characters)'
+    end
+
+    it "checks validation when editing employee's data without password" do
+      visit admin_users_employees_path
+      click_link 'Edit'
+
+      employee2 = create(:employee)
+
+      fill_in 'First Name', with: ''
+      fill_in 'Last Name', with: ''
+      fill_in 'Email', with: employee2.email
+      click_button 'Update'
+
+      expect(page).to have_content "First name can't be blank"
+      expect(page).to have_content "Last name can't be blank"
+      expect(page).to have_content 'Email has already been taken'
     end
   end
 
@@ -110,6 +126,14 @@ RSpec.describe 'Modifying employees', type: :system do
       employee1.reload
       expect(employee.number_of_available_kudos).to eq(first_number_of_kudos + second_number_of_kudos)
       expect(employee1.number_of_available_kudos).to eq(first_number_of_kudos + second_number_of_kudos)
+    end
+
+    it 'checks validation when given number of available is not between 1 to 20' do
+      visit dashboard_admin_users_pages_path
+      click_link 'Add Kudos'
+      fill_in 'Number of kudos', with: 30
+      expect { click_button 'Add Kudos' }.not_to change { employee.reload.number_of_available_kudos }
+      expect(page).to have_content 'Given number is not valid, please enter a number between 1 to 20.'
     end
   end
 end

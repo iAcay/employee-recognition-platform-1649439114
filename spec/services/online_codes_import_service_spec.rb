@@ -29,5 +29,21 @@ RSpec.describe OnlineCodesImportService do
       expect(service.call).to be false
       expect(service.errors.to_s).to include "Couldn't find Reward"
     end
+
+    it 'returns false while csv file was not attached' do
+      params = { file: nil }
+      service = described_class.new(params)
+
+      expect(service.call).to be false
+      expect(service.errors.to_s).to include 'Please select a file.'
+    end
+
+    it 'returns false while attached file is not .csv' do
+      params = { file: fixture_file_upload('./spec/fixtures/online_codes/no_csv_file.jpeg') }
+      service = described_class.new(params)
+
+      expect(service.call).to be false
+      expect(service.errors.to_s).to include 'File must be a .csv.'
+    end
   end
 end

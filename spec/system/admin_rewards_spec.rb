@@ -53,6 +53,21 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
       expect(page).to have_content 'Edit'
       expect(page).to have_content 'Destroy'
     end
+
+    it 'shows particular reward' do
+      reward = create(:reward)
+      visit dashboard_admin_users_pages_path
+      click_link 'Manage Rewards'
+      click_link 'Show'
+
+      expect(page).to have_content reward.title
+      expect(page).to have_content reward.description
+      expect(page).to have_content reward.price
+      expect(page).to have_content reward.display_category
+      expect(page).to have_content reward.delivery_method.titleize
+      expect(page).to have_link 'Edit'
+      expect(page).to have_link 'Back'
+    end
   end
 
   context 'when editing reward' do
@@ -73,6 +88,22 @@ RSpec.describe 'Admin Rewards CRUD', type: :system do
       expect(reward.title).to eq 'New Title of Reward'
       expect(reward.description).to eq 'New Description of Reward'
       expect(reward.price).to eq 120
+    end
+
+    it 'checks validations' do
+      visit '/admin/pages/dashboard'
+      click_link 'Manage Rewards'
+
+      click_link 'Edit'
+      fill_in 'Title', with: ''
+      fill_in 'Description', with: ''
+      fill_in 'Price', with: ''
+      click_button 'Update'
+
+      expect(page).to have_content "Title can't be blank"
+      expect(page).to have_content "Description can't be blank"
+      expect(page).to have_content "Price can't be blank"
+      expect(page).to have_content 'Price is not a number'
     end
   end
 
