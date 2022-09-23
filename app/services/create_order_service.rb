@@ -14,6 +14,8 @@ class CreateOrderService
   def call
     return false unless reward_for_sale?
 
+    return false unless enough_earned_points?
+
     ActiveRecord::Base.transaction do
       create_or_update_address if @reward.delivery_method_post?
       assign_online_code if @reward.delivery_method_online?
@@ -22,7 +24,7 @@ class CreateOrderService
       @employee.decrement(:earned_points, @reward.price).save!
       @order.status_delivered! if @reward.delivery_method_online?
     end
-    send_email_to_employee unless @reward.delivery_method_post?
+    send_email_to_employee
     true
   rescue ActiveRecord::StatementInvalid, ActiveRecord::RecordInvalid => e
     @errors << e.message
@@ -35,6 +37,13 @@ class CreateOrderService
     return true if @reward.available_for_purchase?
 
     @errors << 'Reward is not available now.'
+    false
+  end
+
+  def enough_earned_points?
+    return true if @employee.earned_points >= @reward.price
+
+    @errors << 'This reward is too expensive for you.'
     false
   end
 

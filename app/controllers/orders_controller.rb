@@ -13,16 +13,11 @@ class OrdersController < ApplicationController
 
   def create
     @reward = Reward.find(params[:order][:reward_id])
-    if current_employee.earned_points < @reward.price
-      redirect_to rewards_path, notice: "This reward is too expensive for you.
-                                          You need #{@reward.price - current_employee.earned_points} points more."
+    create_order = CreateOrderService.new(create_order_params)
+    if create_order.call
+      redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
     else
-      create_order = CreateOrderService.new(create_order_params)
-      if create_order.call
-        redirect_to rewards_path, notice: "Reward: #{@reward.title} was successfully bought. Congratulations!"
-      else
-        redirect_back fallback_location: rewards_path, alert: create_order.errors.join('; ')
-      end
+      redirect_back fallback_location: rewards_path, alert: create_order.errors.join('; ')
     end
   end
 
