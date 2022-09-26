@@ -43,9 +43,8 @@ RSpec.describe 'Admin orders listing', type: :system do
   end
 
   context 'when delivering an order to employee' do
-    let!(:order) { create(:order) }
-
     it 'shows the number of not delivered orders' do
+      order = create(:order)
       visit admin_users_employees_path
 
       within('li', text: 'Orders') do
@@ -54,6 +53,7 @@ RSpec.describe 'Admin orders listing', type: :system do
     end
 
     it 'possible to deliver an order only once' do
+      order = create(:order)
       visit admin_users_employees_path
 
       click_link 'Order'
@@ -68,6 +68,24 @@ RSpec.describe 'Admin orders listing', type: :system do
       # TESTING IF ORDER CAN BE DELIVERED MORE THAN ONE TIME
       click_button 'Deliver'
       expect(page).to have_content 'The order has already been delivered.'
+    end
+
+    it 'sends a confirmation email when an order with post delivery method has been delivered' do
+      reward = create(:reward, delivery_method: 'post')
+      create(:order, reward: reward)
+      visit admin_users_employees_path
+      click_link 'Order'
+      expect { click_button 'Deliver' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect(ActionMailer::Base.deliveries.last.subject).to eq 'Reward has been delivered!'
+    end
+
+    it 'sends a confirmation email when an order with pick_up delivery method has been received' do
+      reward = create(:reward, delivery_method: 'pick_up')
+      create(:order, reward: reward)
+      visit admin_users_employees_path
+      click_link 'Order'
+      expect { click_button 'Deliver' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect(ActionMailer::Base.deliveries.last.subject).to eq 'Reward has been received!'
     end
   end
 end

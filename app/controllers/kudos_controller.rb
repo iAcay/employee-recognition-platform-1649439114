@@ -34,7 +34,8 @@ class KudosController < ApplicationController
 
   def update
     authorize kudo
-    if params[:receiver_id] != kudo.receiver.id
+
+    if params.dig(:kudo, :receiver_id).to_i != kudo.receiver.id
       previous_receiver = kudo.receiver
       if kudo.update(kudo_params)
         kudo.receiver.increment(:earned_points).save
@@ -51,13 +52,16 @@ class KudosController < ApplicationController
   end
 
   def destroy
-    previous_receiver = kudo.receiver
     authorize kudo
-    return unless kudo.destroy
 
-    current_employee.increment(:number_of_available_kudos).save
-    previous_receiver.decrement(:earned_points).save
-    redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
+    ActiveRecord::Base.transaction do
+      kudo.destroy!
+      kudo.giver.increment(:number_of_available_kudos).save!
+      kudo.receiver.decrement(:earned_points).save!
+    end
+    redirect_to kudos_path, notice: 'Kudo was successfully destroyed.'
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid => e
+    redirect_to kudos_path, alert: e.message
   end
 
   private

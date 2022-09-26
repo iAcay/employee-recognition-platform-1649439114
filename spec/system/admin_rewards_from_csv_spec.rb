@@ -96,5 +96,22 @@ RSpec.describe 'Import rewards from a CSV', type: :system do
                                    "Description can't be blank, Delivery method can't be blank, " \
                                    'Price is not a number'
     end
+
+    it 'returns false while file was not attached' do
+      visit dashboard_admin_users_pages_path
+      click_link 'Manage Rewards'
+      click_link 'Import rewards from CSV'
+      expect { click_button 'Import Rewards' }.not_to change(Reward, :count)
+      expect(page).to have_content 'Please select a file.'
+    end
+
+    it 'returns false while attached file is not .csv' do
+      visit dashboard_admin_users_pages_path
+      click_link 'Manage Rewards'
+      click_link 'Import rewards from CSV'
+      attach_file Rails.root.join('./spec/fixtures/rewards/test_image.jpeg')
+      expect { click_button 'Import Rewards' }.not_to change(Reward, :count)
+      expect(page).to have_content 'File must be a .csv.'
+    end
   end
 end

@@ -5,11 +5,14 @@ module AdminUsers
     end
 
     def destroy
-      return unless kudo.destroy
-
-      kudo.giver.increment(:number_of_available_kudos).save
-      kudo.receiver.decrement(:earned_points).save
+      ActiveRecord::Base.transaction do
+        kudo.destroy!
+        kudo.giver.increment(:number_of_available_kudos).save!
+        kudo.receiver.decrement(:earned_points).save!
+      end
       redirect_to admin_users_kudos_path, notice: 'Kudo was successfully destroyed.'
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid => e
+      redirect_to admin_users_kudos_path, alert: e.message
     end
 
     private

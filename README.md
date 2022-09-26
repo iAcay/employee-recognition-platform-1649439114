@@ -1,3 +1,5 @@
+<img src='spec/coverage/coverage.svg'>
+
 # Welcome to Employee Recognition Platfrom!
 
 ### How to use the platform?

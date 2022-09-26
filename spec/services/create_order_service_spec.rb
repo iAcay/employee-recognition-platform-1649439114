@@ -35,6 +35,17 @@ RSpec.describe CreateOrderService do
       expect(service.call).to be false
       expect(service.errors.to_s).to include 'Reward is not available now.'
     end
+
+    it 'returns false when employee does not have enough points' do
+      employee = create(:employee, earned_points: 0)
+      reward_with_online_delivery = create(:reward)
+      create(:online_code, reward: reward_with_online_delivery)
+      order_params = { employee_id: employee.id, reward_id: reward_with_online_delivery.id }
+      service = described_class.new(order_params)
+
+      expect(service.call).to be false
+      expect(service.errors.to_s).to include 'This reward is too expensive for you.'
+    end
   end
 
   context 'when buying a reward with post delivery method' do

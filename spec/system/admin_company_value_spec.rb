@@ -74,15 +74,33 @@ RSpec.describe 'Admin Company Values CRUD', type: :system do
       expect(page).to have_content 'Company Value was successfully updated.'
       expect(company_value.title).to eq 'New Title of Company Value'
     end
+
+    it 'checks validations' do
+      visit dashboard_admin_users_pages_path
+      click_link 'Manage Company Values'
+      click_link 'Edit'
+      fill_in 'Title', with: ''
+      expect { click_button 'Update' }.not_to change(CompanyValue, :count)
+      expect(page).to have_content "Title can't be blank"
+    end
   end
 
   context 'when deleting company value' do
-    it 'enables to delete company value' do
+    it 'removes company value' do
       visit '/admin/pages/dashboard'
       click_link 'Manage Company Values'
 
       expect { click_link 'Destroy' }.to change(CompanyValue, :count).by(-1)
       expect(page).to have_content 'Company Value was successfully destroyed.'
+    end
+
+    it 'does not remove company value which is already associated with existing kudo' do
+      create(:kudo, company_value: company_value)
+      visit dashboard_admin_users_pages_path
+      click_link 'Manage Company Values'
+
+      expect { click_link 'Destroy' }.not_to change(CompanyValue, :count)
+      expect(page).to have_content 'This company value cannot be deleted because of its relations with existing kudos.'
     end
   end
 end
